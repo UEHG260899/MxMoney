@@ -9,8 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
 
-    @State private var email = ""
-    @State private var password = ""
+    @StateObject var vm: LoginViewModel
 
     var body: some View {
         NavigationStack {
@@ -30,24 +29,13 @@ struct LoginView: View {
             Text("MxMoney")
                 .mxFont(.mxBold, size: 34)
 
-            MxTextField(text: $email, labelText: "Email")
+            MxTextField(text: $vm.email, labelText: "Email")
 
-            MxSecureTextField(text: $password, labelText: "Contraseña")
+            MxSecureTextField(text: $vm.password, labelText: "Contraseña")
 
             Spacer()
-            Button(action: {}, label: {
-                Text("Login")
-                    .mxFont(.mxRegular, size: 17)
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(height: 40)
-                    .frame(maxWidth: .infinity)
-                    .padding(5)
-                    .background {
-                        RoundedRectangle(cornerRadius: 4)
-                            .foregroundColor(.gray)
-                    }
-            })
+
+            MxButton(labelText: "Login", action: {})
 
             NavigationLink {
                 // TODO: Change for signup view
@@ -67,10 +55,10 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(vm: .init())
             .previewDevice(.init(rawValue: "iPhone SE (3rd generation)"))
 
-        LoginView()
+        LoginView(vm: .init())
 
     }
 }

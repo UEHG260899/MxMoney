@@ -10,4 +10,5 @@ import SwiftUI
 extension Color {
     static let cardBackgroundColor = Color("CardBackgroundColor")
     static let mainColor = Color("MainColor")
+    static let imageBackgroundColor = Color("ImageBackgroundColor")
 }
