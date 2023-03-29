@@ -38,8 +38,7 @@ struct LoginView: View {
             MxButton(labelText: "Login", action: {})
 
             NavigationLink {
-                // TODO: Change for signup view
-                Text("Hola")
+                SignUpViewFactory.make()
             } label: {
                 Text("Registrarse")
                     .mxFont(.mxRegular, size: 14)
