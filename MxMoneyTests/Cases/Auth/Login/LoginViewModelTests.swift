@@ -27,4 +27,8 @@ final class LoginViewModelTests: XCTestCase {
         XCTAssertTrue(sut.password.isEmpty)
     }
 
+    func test_whenInit_networkStatus_isNone() {
+        XCTAssertEqual(sut.viewStatus, .none)
+    }
+
 }

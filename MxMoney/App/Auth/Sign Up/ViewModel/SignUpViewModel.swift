@@ -9,8 +9,5 @@ import Foundation
 
 class SignUpViewModel: ObservableObject {
     @Published var formData: SignUpFormData = .init()
-
-    func printFormData() {
-        print(formData)
-    }
+    @Published var viewStatus: ViewStatus = .none
 }

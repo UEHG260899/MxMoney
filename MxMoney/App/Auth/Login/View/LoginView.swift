@@ -29,13 +29,17 @@ struct LoginView: View {
             Text("MxMoney")
                 .mxFont(.mxBold, size: 34)
 
-            MxTextField(text: $vm.email, labelText: "Email")
+            MxTextField(
+                text: $vm.email,
+                labelText: "Email",
+                scheme: .init(textfieldType: .emailAddress)
+            )
 
             MxSecureTextField(text: $vm.password, labelText: "Contraseña")
 
             Spacer()
 
-            MxButton(labelText: "Login", action: {})
+            MxLoadingButton(labelText: "Iniciar Sesión", status: vm.viewStatus, action: {})
 
             NavigationLink {
                 SignUpViewFactory.make()
