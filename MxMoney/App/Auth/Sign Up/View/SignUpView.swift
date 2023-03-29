@@ -55,7 +55,7 @@ struct SignUpView: View {
                     labelText: "Confirmar contraseña"
                 )
                 Spacer(minLength: 20)
-                MxButton(labelText: "Registrarse", action: vm.printFormData)
+                MxLoadingButton(labelText: "Registrarse", status: vm.viewStatus, action: {})
             }
         }
         .padding(.horizontal, 12)

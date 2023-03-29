@@ -30,4 +30,8 @@ final class SignUpViewModelTests: XCTestCase {
         XCTAssertTrue(sut.formData.confirmPassword.isEmpty)
     }
 
+    func test_onInit_viewStatus_inNone() {
+        XCTAssertEqual(sut.viewStatus, .none)
+    }
+
 }
