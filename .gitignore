@@ -3,3 +3,6 @@
 .DS_Store
 **/xcuserdata/
 **/xcshareddata/
+
+# Pods
+Pods/

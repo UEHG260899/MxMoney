@@ -7,7 +7,7 @@ options:
     iOS: "16.0"
   useTabs: false
   # When using pods
-  #postGenCommand: intel pod install
+  postGenCommand: pod install
   
 settings:
   base:
