@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension Text {
-    func mxFont(_ font: MxFont, size: CGFloat) -> some View {
+    func mxFont(_ font: MxFont, size: CGFloat) -> Text {
         self
             .font(.custom(font.rawValue, size: size))
     }
