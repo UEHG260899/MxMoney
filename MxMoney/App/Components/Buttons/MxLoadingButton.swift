@@ -20,7 +20,7 @@ struct MxLoadingButtonScheme {
 
 struct MxLoadingButton: View {
 
-    let labelText: String
+    let labelText: LocalizedStringKey
     let status: ViewStatus
     var scheme: MxLoadingButtonScheme = .init()
     let action: (() -> Void)
@@ -60,6 +60,6 @@ struct MxLoadingButton: View {
 
 struct MxLoadingButton_Previews: PreviewProvider {
     static var previews: some View {
-        MxLoadingButton(labelText: "Iniciar Sesión", status: .loading, action: {})
+        MxLoadingButton(labelText: "Login.Login.Button", status: .loading, action: {})
     }
 }

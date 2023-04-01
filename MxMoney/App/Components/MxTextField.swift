@@ -25,7 +25,7 @@ struct MxTextFieldScheme {
 struct MxTextField: View {
 
     @Binding var text: String
-    let labelText: String
+    let labelText: LocalizedStringKey
     var scheme: MxTextFieldScheme = .init()
 
     var body: some View {
@@ -50,6 +50,6 @@ struct MxTextField: View {
 
 struct MxTextField_Previews: PreviewProvider {
     static var previews: some View {
-        MxTextField(text: .constant(""), labelText: "Email")
+        MxTextField(text: .constant(""), labelText: "Login.Email.Text")
     }
 }

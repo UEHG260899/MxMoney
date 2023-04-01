@@ -34,4 +34,14 @@ final class SignUpViewModelTests: XCTestCase {
         XCTAssertEqual(sut.viewStatus, .none)
     }
 
+    func test_onInit_textsAreInitialized() {
+        XCTAssertEqual(sut.texts.titleLabel, "Signup.Title.Text")
+        XCTAssertEqual(sut.texts.nameLabel, "Signup.Name.Text")
+        XCTAssertEqual(sut.texts.lastNameLabel, "Signup.LastName.Text")
+        XCTAssertEqual(sut.texts.emailLabel, "Signup.Email.Text")
+        XCTAssertEqual(sut.texts.passwordLabel, "Signup.Password.Text")
+        XCTAssertEqual(sut.texts.confirmPasswordLabel, "Signup.Confirm.Password.Text")
+        XCTAssertEqual(sut.texts.signUpButton, "Signup.Signup.Button")
+    }
+
 }

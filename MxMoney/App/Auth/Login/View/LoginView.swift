@@ -26,25 +26,25 @@ struct LoginView: View {
     var content: some View {
         VStack(spacing: 25) {
             Spacer()
-            Text("MxMoney")
+            Text(vm.texts.headerLabel)
                 .mxFont(.mxBold, size: 34)
 
             MxTextField(
                 text: $vm.email,
-                labelText: "Email",
+                labelText: vm.texts.emailLabel,
                 scheme: .init(textfieldType: .emailAddress)
             )
 
-            MxSecureTextField(text: $vm.password, labelText: "Contraseña")
+            MxSecureTextField(text: $vm.password, labelText: vm.texts.passwordLabel)
 
             Spacer()
 
-            MxLoadingButton(labelText: "Iniciar Sesión", status: vm.viewStatus, action: {})
+            MxLoadingButton(labelText: vm.texts.loginButton, status: vm.viewStatus, action: {})
 
             NavigationLink {
                 SignUpViewFactory.make()
             } label: {
-                Text("Registrarse")
+                Text(vm.texts.signUpButton)
                     .mxFont(.mxRegular, size: 14)
                     .foregroundColor(.white)
             }

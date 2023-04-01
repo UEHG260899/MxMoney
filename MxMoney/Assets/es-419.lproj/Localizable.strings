@@ -1,0 +1,23 @@
+/* 
+  Localizable.strings
+  MxMoney
+
+  Created by Uriel Hernandez Gonzalez on 01/04/23.
+  
+*/
+
+// LOGIN SCREEN
+"Login.Title.Text" = "MxMoney";
+"Login.Email.Text" = "Email";
+"Login.Password.Text" = "Contraseña";
+"Login.Login.Button" = "Iniciar Sesión";
+"Login.Signup.Text" = "Registrarse";
+
+// SIGNUP SCREEN
+"Signup.Title.Text" = "Registrarse";
+"Signup.Name.Text" = "Nombre";
+"Signup.LastName.Text" = "Apellido";
+"Signup.Email.Text" = "Email";
+"Signup.Password.Text" = "Contraseña";
+"Signup.Confirm.Password.Text" = "Confirmar contraseña";
+"Signup.Signup.Button" = "Registrarse";

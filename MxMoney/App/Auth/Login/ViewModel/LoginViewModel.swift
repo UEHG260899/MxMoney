@@ -11,4 +11,5 @@ class LoginViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
     @Published var viewStatus: ViewStatus = .none
+    let texts = LoginTexts()
 }

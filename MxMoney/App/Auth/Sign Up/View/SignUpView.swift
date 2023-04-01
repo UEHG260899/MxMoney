@@ -24,7 +24,7 @@ struct SignUpView: View {
                 MxBackButton()
             }
             ToolbarItem(placement: .principal) {
-                Text("Registrarse")
+                Text(vm.texts.titleLabel)
                     .mxFont(.mxBold, size: 17)
             }
         }
@@ -35,27 +35,27 @@ struct SignUpView: View {
             VStack(spacing: 10) {
                 MxTextField(
                     text: $vm.formData.firstName,
-                    labelText: "Nombre"
+                    labelText: vm.texts.nameLabel
                 )
                 MxTextField(
                     text: $vm.formData.lastName,
-                    labelText: "Apellido"
+                    labelText: vm.texts.lastNameLabel
                 )
                 MxTextField(
                     text: $vm.formData.email,
-                    labelText: "Email",
+                    labelText: vm.texts.emailLabel,
                     scheme: .init(textfieldType: .emailAddress)
                 )
                 MxSecureTextField(
                     text: $vm.formData.password,
-                    labelText: "Contraseña"
+                    labelText: vm.texts.passwordLabel
                 )
                 MxSecureTextField(
                     text: $vm.formData.confirmPassword,
-                    labelText: "Confirmar contraseña"
+                    labelText: vm.texts.confirmPasswordLabel
                 )
                 Spacer(minLength: 20)
-                MxLoadingButton(labelText: "Registrarse", status: vm.viewStatus, action: {})
+                MxLoadingButton(labelText: vm.texts.signUpButton, status: vm.viewStatus, action: {})
             }
         }
         .padding(.horizontal, 12)
