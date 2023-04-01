@@ -11,7 +11,7 @@ struct MxSecureTextField: View {
 
     @State private var isSecureTextEntry = true
     @Binding var text: String
-    let labelText: String
+    let labelText: LocalizedStringKey
     var scheme: MxTextFieldScheme = .init()
 
     var iconImageName: String {
@@ -57,6 +57,6 @@ struct MxSecureTextField: View {
 
 struct MxSecureTextField_Previews: PreviewProvider {
     static var previews: some View {
-        MxSecureTextField(text: .constant("Hola"), labelText: "Contraseña")
+        MxSecureTextField(text: .constant("Hola"), labelText: "Login.Password.Text")
     }
 }

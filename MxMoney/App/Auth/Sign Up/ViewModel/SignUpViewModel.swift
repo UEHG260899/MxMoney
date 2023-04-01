@@ -10,4 +10,5 @@ import Foundation
 class SignUpViewModel: ObservableObject {
     @Published var formData: SignUpFormData = .init()
     @Published var viewStatus: ViewStatus = .none
+    let texts = SignUpTexts()
 }
