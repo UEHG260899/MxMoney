@@ -10,6 +10,11 @@ import Foundation
 class LoginViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
-    @Published var viewStatus: ViewStatus = .none
+    @Published var viewStatus: ViewStatus = .none {
+        didSet {
+            isErrorPresent = viewStatus == .error
+        }
+    }
+    @Published var isErrorPresent = false
     let texts = LoginTexts()
 }

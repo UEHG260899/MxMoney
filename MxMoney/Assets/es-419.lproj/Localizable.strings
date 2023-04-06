@@ -21,3 +21,7 @@
 "Signup.Password.Text" = "Contraseña";
 "Signup.Confirm.Password.Text" = "Confirmar contraseña";
 "Signup.Signup.Button" = "Registrarse";
+
+// ERRORS
+"Error.Alert.Title.Text" = "Algo salió mal";
+"Default.Error.Text" = "Algo misterioso pasó";
