@@ -22,21 +22,41 @@ final class LoginViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_whenInit_emailAndPassword_areEmpty() {
+    func test_onInit_emailAndPassword_areEmpty() {
         XCTAssertTrue(sut.email.isEmpty)
         XCTAssertTrue(sut.password.isEmpty)
     }
 
-    func test_whenInit_networkStatus_isNone() {
+    func test_onInit_networkStatus_isNone() {
         XCTAssertEqual(sut.viewStatus, .none)
     }
 
-    func test_whenInit_textsAreInitialized() {
+    func test_onInit_textsAreInitialized() {
         XCTAssertEqual(sut.texts.headerLabel, "Login.Title.Text")
         XCTAssertEqual(sut.texts.emailLabel, "Login.Email.Text")
         XCTAssertEqual(sut.texts.passwordLabel, "Login.Password.Text")
         XCTAssertEqual(sut.texts.loginButton, "Login.Login.Button")
         XCTAssertEqual(sut.texts.signUpButton, "Login.Signup.Text")
+        XCTAssertEqual(sut.texts.errorAlertTitle, "Error.Alert.Title.Text")
+    }
+
+    func test_onInit_isErrorPresent_hasFalseValue() {
+        XCTAssertFalse(sut.isErrorPresent)
+    }
+
+    func test_whenViewStatusIsError_isErrorPresent_isSetTo_True() {
+        // when
+        sut.viewStatus = .error
+
+        // then
+        XCTAssertTrue(sut.isErrorPresent)
+    }
+
+    func test_whenViewStatus_isNotError_isErrorPresent_isFalse() {
+        // when
+        sut.viewStatus = .none
+
+        XCTAssertFalse(sut.isErrorPresent)
     }
 
 }

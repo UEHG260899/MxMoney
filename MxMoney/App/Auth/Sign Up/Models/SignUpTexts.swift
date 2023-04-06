@@ -15,4 +15,5 @@ struct SignUpTexts {
     let passwordLabel: LocalizedStringKey = "Signup.Password.Text"
     let confirmPasswordLabel: LocalizedStringKey = "Signup.Confirm.Password.Text"
     let signUpButton: LocalizedStringKey = "Signup.Signup.Button"
+    let errorAlertTitle: LocalizedStringKey = "Error.Alert.Title.Text"
 }

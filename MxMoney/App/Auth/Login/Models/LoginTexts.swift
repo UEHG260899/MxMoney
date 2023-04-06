@@ -13,4 +13,5 @@ struct LoginTexts {
     let passwordLabel: LocalizedStringKey = "Login.Password.Text"
     let loginButton: LocalizedStringKey = "Login.Login.Button"
     let signUpButton: LocalizedStringKey = "Login.Signup.Text"
+    let errorAlertTitle: LocalizedStringKey = "Error.Alert.Title.Text"
 }

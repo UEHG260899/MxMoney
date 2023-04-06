@@ -59,6 +59,12 @@ struct SignUpView: View {
             }
         }
         .padding(.horizontal, 12)
+        .alert(vm.texts.errorAlertTitle, isPresented: $vm.isErrorPresent) {
+            Button("Accept", action: {})
+        } message: {
+            Text("Test")
+        }
+
     }
 }
 
