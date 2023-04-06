@@ -42,6 +42,26 @@ final class SignUpViewModelTests: XCTestCase {
         XCTAssertEqual(sut.texts.passwordLabel, "Signup.Password.Text")
         XCTAssertEqual(sut.texts.confirmPasswordLabel, "Signup.Confirm.Password.Text")
         XCTAssertEqual(sut.texts.signUpButton, "Signup.Signup.Button")
+        XCTAssertEqual(sut.texts.errorAlertTitle, "Error.Alert.Title.Text")
+    }
+
+    func test_onInit_isErrorPresent_isSetTo_False() {
+        XCTAssertFalse(sut.isErrorPresent)
+    }
+
+    func test_whenViewStatus_changesToError_isErrorPresent_isTrue() {
+        // when
+        sut.viewStatus = .error
+
+        // then
+        XCTAssertTrue(sut.isErrorPresent)
+    }
+
+    func test_whenViewStatus_isNotError_isErrorPresent_isFalse() {
+        // when
+        sut.viewStatus = .none
+
+        XCTAssertFalse(sut.isErrorPresent)
     }
 
 }

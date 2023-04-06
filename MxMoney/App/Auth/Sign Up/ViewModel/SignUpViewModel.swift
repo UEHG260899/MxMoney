@@ -9,6 +9,11 @@ import Foundation
 
 class SignUpViewModel: ObservableObject {
     @Published var formData: SignUpFormData = .init()
-    @Published var viewStatus: ViewStatus = .none
+    @Published var viewStatus: ViewStatus = .none {
+        didSet {
+            isErrorPresent = viewStatus == .error
+        }
+    }
+    @Published var isErrorPresent = false
     let texts = SignUpTexts()
 }

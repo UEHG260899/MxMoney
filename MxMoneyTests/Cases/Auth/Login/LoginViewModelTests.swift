@@ -44,12 +44,19 @@ final class LoginViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isErrorPresent)
     }
 
-    func test_whenViewStateIsError_isErrorPresent_isSetTo_True() {
+    func test_whenViewStatusIsError_isErrorPresent_isSetTo_True() {
         // when
         sut.viewStatus = .error
 
         // then
         XCTAssertTrue(sut.isErrorPresent)
+    }
+
+    func test_whenViewStatus_isNotError_isErrorPresent_isFalse() {
+        // when
+        sut.viewStatus = .none
+
+        XCTAssertFalse(sut.isErrorPresent)
     }
 
 }
