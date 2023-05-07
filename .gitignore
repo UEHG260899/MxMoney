@@ -4,5 +4,7 @@
 **/xcuserdata/
 **/xcshareddata/
 
+MxMoney/GoogleService-Info.plist
+
 # Pods
 Pods/

@@ -11,13 +11,16 @@ import XCTest
 final class SignUpViewModelTests: XCTestCase {
 
     var sut: SignUpViewModel!
+    var mockAuthManager: MockAuthManager!
 
     override func setUp() {
         super.setUp()
-        sut = SignUpViewModel()
+        mockAuthManager = MockAuthManager()
+        sut = SignUpViewModel(authManager: mockAuthManager)
     }
 
     override func tearDown() {
+        mockAuthManager = nil
         sut = nil
         super.tearDown()
     }
@@ -49,6 +52,10 @@ final class SignUpViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isErrorPresent)
     }
 
+    func test_onInit_authManager_isSet() {
+        XCTAssertNotNil(sut.authManager)
+    }
+
     func test_whenViewStatus_changesToError_isErrorPresent_isTrue() {
         // when
         sut.viewStatus = .error
@@ -62,6 +69,59 @@ final class SignUpViewModelTests: XCTestCase {
         sut.viewStatus = .none
 
         XCTAssertFalse(sut.isErrorPresent)
+    }
+
+    func test_attemptToCreateUser_setsViewStatus_toLoading_whenCalled() {
+        // when
+        sut.attemptToCreateUser()
+
+        // then
+        XCTAssertEqual(sut.viewStatus, .loading)
+    }
+
+    func test_attemptToCreateUser_callsRegister_onAuthManager() {
+        // when
+        sut.attemptToCreateUser()
+
+        // then
+        XCTAssertTrue(mockAuthManager.calledMethods.contains(.register))
+    }
+
+    func test_attemptToCreateUser_sendsEmail_andPassword_fromFormDataValues() {
+        // given
+        sut.formData.email = "uriel@gmail.com"
+        sut.formData.password = "SomePassword"
+
+        // when
+        sut.attemptToCreateUser()
+
+        // then
+        XCTAssertEqual(mockAuthManager.receivedEmail, sut.formData.email)
+        XCTAssertEqual(mockAuthManager.receivedPassword, sut.formData.password)
+    }
+
+    func test_attemptToCreateUser_changesViewState_toError_whenCompletionReturnsError() {
+        // given
+        let error: AppError = .authentication("Some description")
+        mockAuthManager.shouldCompleteWith = .failure(error)
+
+        // when
+        sut.attemptToCreateUser()
+
+        // then
+        XCTAssertEqual(sut.viewStatus, .error)
+    }
+
+    func test_attemptToCreateUser_setsErrorDescription_whenCompletionReturnsError() {
+        // given
+        let error: AppError = .authentication("Some description")
+        mockAuthManager.shouldCompleteWith = .failure(error)
+
+        // when
+        sut.attemptToCreateUser()
+
+        // then
+        XCTAssertEqual(sut.errorDescription, "Some description")
     }
 
 }

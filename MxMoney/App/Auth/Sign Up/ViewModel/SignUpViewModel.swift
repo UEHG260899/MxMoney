@@ -15,6 +15,26 @@ class SignUpViewModel: ObservableObject {
         }
     }
     @Published var isErrorPresent = false
-    let texts = SignUpTexts()
 
+    let authManager: AuthManagerProtocol
+    let texts = SignUpTexts()
+    var errorDescription = ""
+
+    init(authManager: AuthManagerProtocol) {
+        self.authManager = authManager
+    }
+
+    func attemptToCreateUser() {
+        viewStatus = .loading
+        authManager.register(email: formData.email, password: formData.password) { [weak self] result in
+            guard let self else { return }
+
+            if case .failure(let error) = result {
+                if case .authentication(let description) = error {
+                    self.errorDescription = description
+                    self.viewStatus = .error
+                }
+            }
+        }
+    }
 }

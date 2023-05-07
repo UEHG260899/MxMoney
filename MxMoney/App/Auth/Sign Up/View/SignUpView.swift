@@ -58,7 +58,7 @@ struct SignUpView: View {
                 MxLoadingButton(
                     labelText: vm.texts.signUpButton,
                     status: vm.viewStatus,
-                    action: { print("Hola") }
+                    action: vm.attemptToCreateUser
                 )
                     .disabled(vm.formData.isInvalid())
             }
@@ -67,7 +67,7 @@ struct SignUpView: View {
         .alert(vm.texts.errorAlertTitle, isPresented: $vm.isErrorPresent) {
             Button("Accept", action: {})
         } message: {
-            Text("Test")
+            Text(vm.errorDescription)
         }
 
     }
@@ -76,12 +76,12 @@ struct SignUpView: View {
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            SignUpView(vm: .init())
+            SignUpView(vm: .init(authManager: AuthManager()))
         }
         .previewDevice(.init(rawValue: "iPhone SE (3rd generation)"))
 
         NavigationStack {
-            SignUpView(vm: .init())
+            SignUpView(vm: .init(authManager: AuthManager()))
         }
     }
 }

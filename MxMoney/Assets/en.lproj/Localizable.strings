@@ -25,3 +25,9 @@
 // ERRORS
 "Error.Alert.Title.Text" = "Something went wrong";
 "Default.Error.Text" = "Something mysterious happened";
+"Network.Error.Text" = "A network error occurred, please try again later";
+"Invalid.Email.Error.Text" = "The email isn´t valid";
+"Disabled.User.Error.Text" = "The user is disabled";
+"Email.Used.Error.Text" = "There´s already an account using the email";
+"Weak.Password.Error.Text" = "Password should be at least 6 characters long";
+"Wrong.Password.Error.Text" = "Wrong email or password";

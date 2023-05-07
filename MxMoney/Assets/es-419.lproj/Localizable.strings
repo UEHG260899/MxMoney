@@ -25,3 +25,9 @@
 // ERRORS
 "Error.Alert.Title.Text" = "Algo salió mal";
 "Default.Error.Text" = "Algo misterioso pasó";
+"Network.Error.Text" = "Ocurrió un error de red, intentalo de nuevo más tarde";
+"Invalid.Email.Error.Text" = "El email no es válido";
+"Disabled.User.Error.Text" = "El usuario esta deshabilitado";
+"Email.Used.Error.Text" = "Ya existe una cuenta con el email introducido";
+"Weak.Password.Error.Text" = "La contraseña debe de contener al menos 6 caracteres";
+"Wrong.Password.Error.Text" = "El email o la contraseña son incorrectos";

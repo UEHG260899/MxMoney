@@ -7,10 +7,20 @@ target 'MxMoney' do
 
   # Pods for MxMoney
   pod 'lottie-ios', '4.1.3'
+  pod 'RealmSwift', '10.36.0'
+  pod 'FirebaseAuth', '10.5.0'
 
   target 'MxMoneyTests' do
     inherit! :search_paths
     # Pods for testing
   end
 
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '16.0'
+    end
+  end
 end
