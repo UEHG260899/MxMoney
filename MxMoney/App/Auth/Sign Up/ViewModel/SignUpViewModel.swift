@@ -16,4 +16,5 @@ class SignUpViewModel: ObservableObject {
     }
     @Published var isErrorPresent = false
     let texts = SignUpTexts()
+
 }

@@ -55,7 +55,12 @@ struct SignUpView: View {
                     labelText: vm.texts.confirmPasswordLabel
                 )
                 Spacer(minLength: 20)
-                MxLoadingButton(labelText: vm.texts.signUpButton, status: vm.viewStatus, action: {})
+                MxLoadingButton(
+                    labelText: vm.texts.signUpButton,
+                    status: vm.viewStatus,
+                    action: { print("Hola") }
+                )
+                    .disabled(vm.formData.isInvalid())
             }
         }
         .padding(.horizontal, 12)
