@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 class SignUpViewModel: ObservableObject {
     @Published var formData: SignUpFormData = .init()
@@ -17,11 +18,13 @@ class SignUpViewModel: ObservableObject {
     @Published var isErrorPresent = false
 
     let authManager: AuthManagerProtocol
+    let realmManager: RealmManagerProtocol
     let texts = SignUpTexts()
     var errorDescription = ""
 
-    init(authManager: AuthManagerProtocol) {
+    init(authManager: AuthManagerProtocol, realmManager: RealmManagerProtocol) {
         self.authManager = authManager
+        self.realmManager = realmManager
     }
 
     func attemptToCreateUser() {
@@ -29,12 +32,27 @@ class SignUpViewModel: ObservableObject {
         authManager.register(email: formData.email, password: formData.password) { [weak self] result in
             guard let self else { return }
 
-            if case .failure(let error) = result {
+            switch result {
+            case .success(let userId):
+                self.viewStatus = .completed
+                self.storeUser(id: userId)
+            case .failure(let error):
                 if case .authentication(let description) = error {
                     self.errorDescription = description
                     self.viewStatus = .error
                 }
             }
         }
+    }
+
+    private func storeUser(id: String) {
+        let user = User(
+            id: id,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email
+        )
+
+        realmManager.save(user)
     }
 }

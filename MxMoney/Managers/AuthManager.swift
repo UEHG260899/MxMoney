@@ -10,8 +10,8 @@ import FirebaseAuth
 
 class AuthManager: AuthManagerProtocol {
 
-    func register(email: String, password: String, completion: @escaping (Result<Void, AppError>) -> Void) {
-        Auth.auth().createUser(withEmail: email, password: password) { _, error in
+    func register(email: String, password: String, completion: @escaping (Result<String, AppError>) -> Void) {
+        Auth.auth().createUser(withEmail: email, password: password) { authResponse, error in
             if let error {
                 let nsError = error as NSError
                 let description = FirebaseErrorUtilities.getAuthErrorDescription(for: nsError)
@@ -19,7 +19,10 @@ class AuthManager: AuthManagerProtocol {
                 return
             }
 
-            completion(.success(()))
+            // TODO: Create some error
+            guard let authResponse else { return }
+
+            completion(.success(authResponse.user.uid))
         }
     }
 }

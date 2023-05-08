@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseCore
+import RealmSwift
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(
@@ -14,6 +15,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
         FirebaseApp.configure()
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
         return true
     }
 }

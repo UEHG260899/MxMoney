@@ -10,7 +10,8 @@ import Foundation
 enum SignUpViewFactory {
     static func make() -> SignUpView {
         let authManager = AuthManager()
-        let viewModel = SignUpViewModel(authManager: authManager)
+        let realManager = RealmManager()
+        let viewModel = SignUpViewModel(authManager: authManager, realmManager: realManager)
         return SignUpView(vm: viewModel)
     }
 }

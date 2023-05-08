@@ -19,12 +19,15 @@ class MockAuthManager: AuthManagerProtocol {
     var calledMethods: CalledMethods = []
     var receivedEmail: String?
     var receivedPassword: String?
-    var shouldCompleteWith: Result<Void, AppError> = .success(())
+    var shouldCompleteWith: Result<String, AppError>?
 
-    func register(email: String, password: String, completion: @escaping (Result<Void, AppError>) -> Void) {
+    func register(email: String, password: String, completion: @escaping (Result<String, AppError>) -> Void) {
         calledMethods.insert(.register)
         receivedEmail = email
         receivedPassword = password
-        completion(shouldCompleteWith)
+        
+        if let shouldCompleteWith {
+            completion(shouldCompleteWith)
+        }
     }
 }

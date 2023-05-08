@@ -74,14 +74,19 @@ struct SignUpView: View {
 }
 
 struct SignUpView_Previews: PreviewProvider {
+    static let viewModel = SignUpViewModel(
+        authManager: AuthManager(),
+        realmManager: RealmManager()
+    )
+
     static var previews: some View {
         NavigationStack {
-            SignUpView(vm: .init(authManager: AuthManager()))
+            SignUpView(vm: viewModel)
         }
         .previewDevice(.init(rawValue: "iPhone SE (3rd generation)"))
 
         NavigationStack {
-            SignUpView(vm: .init(authManager: AuthManager()))
+            SignUpView(vm: viewModel)
         }
     }
 }

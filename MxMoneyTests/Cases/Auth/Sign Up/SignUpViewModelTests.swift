@@ -12,15 +12,21 @@ final class SignUpViewModelTests: XCTestCase {
 
     var sut: SignUpViewModel!
     var mockAuthManager: MockAuthManager!
+    var mockRealmManager: MockRealmManager!
 
     override func setUp() {
         super.setUp()
         mockAuthManager = MockAuthManager()
-        sut = SignUpViewModel(authManager: mockAuthManager)
+        mockRealmManager = MockRealmManager()
+        sut = SignUpViewModel(
+            authManager: mockAuthManager,
+            realmManager: mockRealmManager
+        )
     }
 
     override func tearDown() {
         mockAuthManager = nil
+        mockRealmManager = nil
         sut = nil
         super.tearDown()
     }
@@ -54,6 +60,10 @@ final class SignUpViewModelTests: XCTestCase {
 
     func test_onInit_authManager_isSet() {
         XCTAssertNotNil(sut.authManager)
+    }
+
+    func test_onInit_realmManager_isSet() {
+        XCTAssertNotNil(sut.realmManager)
     }
 
     func test_whenViewStatus_changesToError_isErrorPresent_isTrue() {
@@ -122,6 +132,47 @@ final class SignUpViewModelTests: XCTestCase {
 
         // then
         XCTAssertEqual(sut.errorDescription, "Some description")
+    }
+
+    func test_attemptToCreateUser_setsViewStatus_toCompleted_whenCmpletionReturnsSuccess() {
+        // given
+        mockAuthManager.shouldCompleteWith = .success("")
+
+        // when
+        sut.attemptToCreateUser()
+
+        // then
+        XCTAssertEqual(sut.viewStatus, .completed)
+    }
+
+    func test_attemptToCreateUser_callsSave_onRealmManager_whenCompletionReturnsSuccess() {
+        // given
+        mockAuthManager.shouldCompleteWith = .success("")
+
+        // when
+        sut.attemptToCreateUser()
+
+        // then
+        XCTAssertTrue(mockRealmManager.calledMethods.contains(.save))
+    }
+
+    func test_attemptToCreateUser_sendsCorrectInfo_toRealmManager_whenCompletionReturnsSuccess() {
+        // given
+        sut.formData.firstName = "Uriel"
+        sut.formData.lastName = "Hernandez"
+        sut.formData.email = "uriel@gmail.com"
+
+        mockAuthManager.shouldCompleteWith = .success("Some id")
+
+        // when
+        sut.attemptToCreateUser()
+        let user = mockRealmManager.receivedData as? User
+
+        // then
+        XCTAssertEqual(user?.id, "Some id")
+        XCTAssertEqual(user?.firstName, sut.formData.firstName)
+        XCTAssertEqual(user?.lastName, sut.formData.lastName)
+        XCTAssertEqual(user?.email, sut.formData.email)
     }
 
 }
