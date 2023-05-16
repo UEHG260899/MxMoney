@@ -8,5 +8,5 @@
 import Foundation
 
 protocol FirebaseManagerProtocol {
-    func store<T: Encodable>(_ data: T) async throws
+    func store<T: Encodable>(_ data: T, in collectionName: String, with id: String?) async throws
 }

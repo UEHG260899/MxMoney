@@ -33,6 +33,7 @@ class SignUpViewModel: ObservableObject {
         self.firebaseManager = firebaseManager
     }
 
+    // TODO: Transform to async
     func attemptToCreateUser() {
         viewStatus = .loading
         authManager.register(email: formData.email, password: formData.password) { [weak self] result in
@@ -59,15 +60,14 @@ class SignUpViewModel: ObservableObject {
             email: formData.email
         )
 
-        Task {
+        Task { @MainActor in
             do {
-                try await firebaseManager.store(user)
+                try await firebaseManager.store(user, in: "users", with: user.id)
+                self.realmManager.save(user)
             } catch {
                 self.errorDescription = "F"
                 self.viewStatus = .error
             }
         }
-
-        realmManager.save(user)
     }
 }

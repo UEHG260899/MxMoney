@@ -18,8 +18,11 @@ class MockFirebaseManager: FirebaseManagerProtocol {
 
     var calledMethods: CalledMethods = []
 
-    func store<T: Encodable>(_ data: T) async throws {
+    func store<T: Encodable>(_ data: T, in collectionName: String, with id: String? = nil) async throws {
         calledMethods.insert(.store)
+        try await withCheckedThrowingContinuation({ continuation in
+            continuation.resume()
+        })
     }
 
 }

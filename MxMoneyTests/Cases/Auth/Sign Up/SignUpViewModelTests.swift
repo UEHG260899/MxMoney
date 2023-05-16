@@ -149,6 +149,7 @@ final class SignUpViewModelTests: XCTestCase {
         XCTAssertEqual(sut.viewStatus, .completed)
     }
 
+    // TODO: Fix to use new Async model
     func test_attemptToCreateUser_callsSave_onRealmManager_whenCompletionReturnsSuccess() {
         // given
         mockAuthManager.shouldCompleteWith = .success("")

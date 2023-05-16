@@ -9,6 +9,8 @@ target 'MxMoney' do
   pod 'lottie-ios', '4.1.3'
   pod 'RealmSwift', '10.36.0'
   pod 'FirebaseAuth', '10.5.0'
+  pod 'FirebaseFirestore', '10.5.0'
+  pod 'FirebaseFirestoreSwift', '10.5.0'
 
   target 'MxMoneyTests' do
     inherit! :search_paths
