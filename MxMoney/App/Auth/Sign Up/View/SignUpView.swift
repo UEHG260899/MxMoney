@@ -57,9 +57,11 @@ struct SignUpView: View {
                 Spacer(minLength: 20)
                 MxLoadingButton(
                     labelText: vm.texts.signUpButton,
-                    status: vm.viewStatus,
-                    action: vm.attemptToCreateUser
-                )
+                    status: vm.viewStatus) {
+                        Task {
+                            await vm.attemptToCreateUser()
+                        }
+                    }
                     .disabled(vm.formData.isInvalid())
             }
         }

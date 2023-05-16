@@ -15,6 +15,15 @@ final class SignUpViewModelTests: XCTestCase {
     var mockRealmManager: MockRealmManager!
     var mockFirebaseManager: MockFirebaseManager!
 
+    var mockUser: User {
+        return User(
+            id: "Some id",
+            firstName: "Uriel",
+            lastName: "Hernandez",
+            email: "uriel@gmail.com"
+        )
+    }
+
     override func setUp() {
         super.setUp()
         mockAuthManager = MockAuthManager()
@@ -85,110 +94,90 @@ final class SignUpViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isErrorPresent)
     }
 
-    func test_attemptToCreateUser_setsViewStatus_toLoading_whenCalled() {
+    func test_attemptToCreateUser_setsViewStatus_toLoading_whenCalled() async {
         // when
-        sut.attemptToCreateUser()
+        await sut.attemptToCreateUser()
 
         // then
         XCTAssertEqual(sut.viewStatus, .loading)
     }
 
-    func test_attemptToCreateUser_callsRegister_onAuthManager() {
+    func test_attemptToCreateUser_callsRegister_onAuthManager() async {
         // when
-        sut.attemptToCreateUser()
+        await sut.attemptToCreateUser()
 
         // then
         XCTAssertTrue(mockAuthManager.calledMethods.contains(.register))
     }
 
-    func test_attemptToCreateUser_sendsEmail_andPassword_fromFormDataValues() {
+    func test_attemptToCreateUser_sendsEmail_andPassword_fromFormDataValues() async {
         // given
         sut.formData.email = "uriel@gmail.com"
         sut.formData.password = "SomePassword"
 
         // when
-        sut.attemptToCreateUser()
+        await sut.attemptToCreateUser()
 
         // then
         XCTAssertEqual(mockAuthManager.receivedEmail, sut.formData.email)
         XCTAssertEqual(mockAuthManager.receivedPassword, sut.formData.password)
     }
 
-    func test_attemptToCreateUser_changesViewState_toError_whenCompletionReturnsError() {
+    func test_attemptToCreateUser_changesViewState_toError_whenCompletionReturnsError() async {
         // given
         let error: AppError = .authentication("Some description")
         mockAuthManager.shouldCompleteWith = .failure(error)
 
         // when
-        sut.attemptToCreateUser()
+        await sut.attemptToCreateUser()
 
         // then
         XCTAssertEqual(sut.viewStatus, .error)
     }
 
-    func test_attemptToCreateUser_setsErrorDescription_whenCompletionReturnsError() {
+    func test_attemptToCreateUser_setsErrorDescription_whenCompletionReturnsError() async {
         // given
         let error: AppError = .authentication("Some description")
         mockAuthManager.shouldCompleteWith = .failure(error)
 
         // when
-        sut.attemptToCreateUser()
+        await sut.attemptToCreateUser()
 
         // then
         XCTAssertEqual(sut.errorDescription, "Some description")
     }
 
-    func test_attemptToCreateUser_setsViewStatus_toCompleted_whenCmpletionReturnsSuccess() {
+    func test_attemptToCreateUser_callsStore_onFirebaseManager_whenItDoesntThrow() async {
         // given
         mockAuthManager.shouldCompleteWith = .success("")
 
         // when
-        sut.attemptToCreateUser()
-
-        // then
-        XCTAssertEqual(sut.viewStatus, .completed)
-    }
-
-    // TODO: Fix to use new Async model
-    func test_attemptToCreateUser_callsSave_onRealmManager_whenCompletionReturnsSuccess() {
-        // given
-        mockAuthManager.shouldCompleteWith = .success("")
-
-        // when
-        sut.attemptToCreateUser()
-
-        // then
-        XCTAssertTrue(mockRealmManager.calledMethods.contains(.save))
-    }
-
-    func test_attemptToCreateUser_sendsCorrectInfo_toRealmManager_whenCompletionReturnsSuccess() {
-        // given
-        sut.formData.firstName = "Uriel"
-        sut.formData.lastName = "Hernandez"
-        sut.formData.email = "uriel@gmail.com"
-
-        mockAuthManager.shouldCompleteWith = .success("Some id")
-
-        // when
-        sut.attemptToCreateUser()
-        let user = mockRealmManager.receivedData as? User
-
-        // then
-        XCTAssertEqual(user?.id, "Some id")
-        XCTAssertEqual(user?.firstName, sut.formData.firstName)
-        XCTAssertEqual(user?.lastName, sut.formData.lastName)
-        XCTAssertEqual(user?.email, sut.formData.email)
-    }
-
-    func test_attemptToCreateUser_callsStore_onFirebaseManager_whenAuthManagerReturnsSuccess() {
-        // given
-        mockAuthManager.shouldCompleteWith = .success("")
-
-        // when
-        sut.attemptToCreateUser()
+        await sut.attemptToCreateUser()
 
         // then
         XCTAssertTrue(mockFirebaseManager.calledMethods.contains(.store))
     }
 
+    func test_attemptToCreateUser_sendsCorrectData_toFirebaseManager() async {
+        // given
+        mockAuthManager.shouldCompleteWith = .success(mockUser.id)
+
+        // when
+        await sut.attemptToCreateUser()
+
+        // then
+        XCTAssertEqual(mockFirebaseManager.receivedCollectionName, "users")
+        XCTAssertEqual(mockFirebaseManager.receivedId, mockUser.id)
+    }
+
+    func test_attemptToCreateUser_callsSave_onRealmManager_whenDoesntThrow() async {
+        // given
+        mockAuthManager.shouldCompleteWith = .success(mockUser.id)
+
+        // when
+        await sut.attemptToCreateUser()
+
+        // then
+        XCTAssertTrue(mockRealmManager.calledMethods.contains(.save))
+    }
 }

@@ -33,26 +33,20 @@ class SignUpViewModel: ObservableObject {
         self.firebaseManager = firebaseManager
     }
 
-    // TODO: Transform to async
-    func attemptToCreateUser() {
-        viewStatus = .loading
-        authManager.register(email: formData.email, password: formData.password) { [weak self] result in
-            guard let self else { return }
+    func attemptToCreateUser() async {
+        await MainActor.run {
+            viewStatus = .loading
+        }
 
-            switch result {
-            case .success(let userId):
-                self.viewStatus = .completed
-                self.storeUser(id: userId)
-            case .failure(let error):
-                if case .authentication(let description) = error {
-                    self.errorDescription = description
-                    self.viewStatus = .error
-                }
-            }
+        do {
+            let userId = try await authManager.register(email: formData.email, password: formData.password)
+            try await storeUser(id: userId)
+        } catch {
+            await handleError(error as! AppError)
         }
     }
 
-    private func storeUser(id: String) {
+    private func storeUser(id: String) async throws {
         let user = User(
             id: id,
             firstName: formData.firstName,
@@ -60,13 +54,17 @@ class SignUpViewModel: ObservableObject {
             email: formData.email
         )
 
-        Task { @MainActor in
-            do {
-                try await firebaseManager.store(user, in: "users", with: user.id)
-                self.realmManager.save(user)
-            } catch {
-                self.errorDescription = "F"
-                self.viewStatus = .error
+        try await firebaseManager.store(user, in: "users", with: user.id)
+        realmManager.save(user)
+    }
+
+    private func handleError(_ error: AppError) async {
+        await MainActor.run {
+            viewStatus = .error
+
+            switch error {
+            case .authentication(let description):
+                errorDescription = description
             }
         }
     }

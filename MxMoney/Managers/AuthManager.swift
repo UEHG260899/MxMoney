@@ -10,19 +10,23 @@ import FirebaseAuth
 
 class AuthManager: AuthManagerProtocol {
 
-    func register(email: String, password: String, completion: @escaping (Result<String, AppError>) -> Void) {
-        Auth.auth().createUser(withEmail: email, password: password) { authResponse, error in
-            if let error {
-                let nsError = error as NSError
-                let description = FirebaseErrorUtilities.getAuthErrorDescription(for: nsError)
-                completion(.failure(.authentication(description)))
-                return
+    func register(email: String, password: String) async throws -> String {
+        return try await withCheckedThrowingContinuation({ continuation in
+            Auth.auth().createUser(withEmail: email, password: password) { authResponse, error in
+                if let error {
+                    let nsError = error as NSError
+                    let description = FirebaseErrorUtilities.getAuthErrorDescription(for: nsError)
+                    continuation.resume(throwing: AppError.authentication(description))
+                    return
+                }
+
+                guard let authResponse else {
+                    continuation.resume(throwing: AppError.authentication("No user available"))
+                    return
+                }
+
+                continuation.resume(returning: authResponse.user.uid)
             }
-
-            // TODO: Create some error
-            guard let authResponse else { return }
-
-            completion(.success(authResponse.user.uid))
-        }
+        })
     }
 }
