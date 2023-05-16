@@ -11,7 +11,12 @@ enum SignUpViewFactory {
     static func make() -> SignUpView {
         let authManager = AuthManager()
         let realManager = RealmManager()
-        let viewModel = SignUpViewModel(authManager: authManager, realmManager: realManager)
+        let firebaseManager = FirebaseManager()
+        let viewModel = SignUpViewModel(
+            authManager: authManager,
+            realmManager: realManager,
+            firebaseManager: firebaseManager
+        )
         return SignUpView(vm: viewModel)
     }
 }

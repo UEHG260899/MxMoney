@@ -76,7 +76,8 @@ struct SignUpView: View {
 struct SignUpView_Previews: PreviewProvider {
     static let viewModel = SignUpViewModel(
         authManager: AuthManager(),
-        realmManager: RealmManager()
+        realmManager: RealmManager(),
+        firebaseManager: FirebaseManager()
     )
 
     static var previews: some View {

@@ -13,20 +13,24 @@ final class SignUpViewModelTests: XCTestCase {
     var sut: SignUpViewModel!
     var mockAuthManager: MockAuthManager!
     var mockRealmManager: MockRealmManager!
+    var mockFirebaseManager: MockFirebaseManager!
 
     override func setUp() {
         super.setUp()
         mockAuthManager = MockAuthManager()
         mockRealmManager = MockRealmManager()
+        mockFirebaseManager = MockFirebaseManager()
         sut = SignUpViewModel(
             authManager: mockAuthManager,
-            realmManager: mockRealmManager
+            realmManager: mockRealmManager,
+            firebaseManager: mockFirebaseManager
         )
     }
 
     override func tearDown() {
         mockAuthManager = nil
         mockRealmManager = nil
+        mockFirebaseManager = nil
         sut = nil
         super.tearDown()
     }
@@ -173,6 +177,17 @@ final class SignUpViewModelTests: XCTestCase {
         XCTAssertEqual(user?.firstName, sut.formData.firstName)
         XCTAssertEqual(user?.lastName, sut.formData.lastName)
         XCTAssertEqual(user?.email, sut.formData.email)
+    }
+
+    func test_attemptToCreateUser_callsStore_onFirebaseManager_whenAuthManagerReturnsSuccess() {
+        // given
+        mockAuthManager.shouldCompleteWith = .success("")
+
+        // when
+        sut.attemptToCreateUser()
+
+        // then
+        XCTAssertTrue(mockFirebaseManager.calledMethods.contains(.store))
     }
 
 }

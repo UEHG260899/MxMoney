@@ -19,12 +19,18 @@ class SignUpViewModel: ObservableObject {
 
     let authManager: AuthManagerProtocol
     let realmManager: RealmManagerProtocol
+    let firebaseManager: FirebaseManagerProtocol
     let texts = SignUpTexts()
     var errorDescription = ""
 
-    init(authManager: AuthManagerProtocol, realmManager: RealmManagerProtocol) {
+    init(
+        authManager: AuthManagerProtocol,
+        realmManager: RealmManagerProtocol,
+        firebaseManager: FirebaseManagerProtocol
+    ) {
         self.authManager = authManager
         self.realmManager = realmManager
+        self.firebaseManager = firebaseManager
     }
 
     func attemptToCreateUser() {
@@ -52,6 +58,15 @@ class SignUpViewModel: ObservableObject {
             lastName: formData.lastName,
             email: formData.email
         )
+
+        Task {
+            do {
+                try await firebaseManager.store(user)
+            } catch {
+                self.errorDescription = "F"
+                self.viewStatus = .error
+            }
+        }
 
         realmManager.save(user)
     }

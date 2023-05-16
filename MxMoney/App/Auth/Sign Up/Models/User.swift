@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class User: Object {
+class User: Object, Codable {
     @Persisted(primaryKey: true) var id: String
     @Persisted var firstName: String
     @Persisted var lastName: String
