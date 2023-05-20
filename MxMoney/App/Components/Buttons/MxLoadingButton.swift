@@ -22,6 +22,7 @@ struct MxLoadingButton: View {
 
     let labelText: LocalizedStringKey
     let status: ViewStatus
+    let isDisabled: Bool
     var scheme: MxLoadingButtonScheme = .init()
     let action: (() -> Void)
 
@@ -41,7 +42,7 @@ struct MxLoadingButton: View {
                     .foregroundColor(scheme.foregroundColor.opacity(backgroundOpacity))
             }
         }
-        .disabled(status == .loading)
+        .disabled(isButtonDisabled)
     }
 
     var textComponent: some View {
@@ -54,12 +55,16 @@ struct MxLoadingButton: View {
     }
 
     var backgroundOpacity: CGFloat {
-        status == .loading ? 0.5 : 1
+        isButtonDisabled ? 0.5 : 1
+    }
+
+    var isButtonDisabled: Bool {
+        return status == .loading || isDisabled
     }
 }
 
 struct MxLoadingButton_Previews: PreviewProvider {
     static var previews: some View {
-        MxLoadingButton(labelText: "Login.Login.Button", status: .loading, action: {})
+        MxLoadingButton(labelText: "Login.Login.Button", status: .loading, isDisabled: false, action: {})
     }
 }

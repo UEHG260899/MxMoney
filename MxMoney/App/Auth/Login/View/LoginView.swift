@@ -39,12 +39,14 @@ struct LoginView: View {
 
             Spacer()
 
-            MxLoadingButton(labelText: vm.texts.loginButton, status: vm.viewStatus) {
+            MxLoadingButton(
+                labelText: vm.texts.loginButton,
+                status: vm.viewStatus,
+                isDisabled: vm.formData.fieldsAreEmpty()) {
                 Task {
                     await vm.attemptToLogin()
                 }
             }
-            .disabled(vm.formData.fieldsAreEmpty())
 
             NavigationLink {
                 SignUpViewFactory.make()
