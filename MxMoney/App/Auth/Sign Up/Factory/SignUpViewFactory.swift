@@ -9,7 +9,14 @@ import Foundation
 
 enum SignUpViewFactory {
     static func make() -> SignUpView {
-        let viewModel = SignUpViewModel()
+        let authManager = AuthManager()
+        let realManager = RealmManager()
+        let firebaseManager = FirebaseManager()
+        let viewModel = SignUpViewModel(
+            authManager: authManager,
+            realmManager: realManager,
+            firebaseManager: firebaseManager
+        )
         return SignUpView(vm: viewModel)
     }
 }

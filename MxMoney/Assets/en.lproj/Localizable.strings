@@ -25,3 +25,14 @@
 // ERRORS
 "Error.Alert.Title.Text" = "Something went wrong";
 "Default.Error.Text" = "Something mysterious happened";
+"Network.Error.Text" = "A network error occurred, please try again later";
+"Invalid.Email.Error.Text" = "The email isn´t valid";
+"Disabled.User.Error.Text" = "The user is disabled";
+"Email.Used.Error.Text" = "There´s already an account using the email";
+"Weak.Password.Error.Text" = "Password should be at least 6 characters long";
+"Wrong.Password.Error.Text" = "Wrong email or password";
+"Invalid.Argument.Error.Text" = "A search was executed with an invalid argument";
+"Deadline.Exceeded.Error.Text" = "Connection timeout";
+"No.Data.Error.Text" = "No data was found";
+"Already.Exists.Error.Text" = "There´s already data with the same attributes, please check and try again";
+"Unavailable.Error.Text" = "Service is unavailable, please try again later";

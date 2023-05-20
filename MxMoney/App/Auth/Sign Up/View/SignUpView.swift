@@ -55,28 +55,41 @@ struct SignUpView: View {
                     labelText: vm.texts.confirmPasswordLabel
                 )
                 Spacer(minLength: 20)
-                MxLoadingButton(labelText: vm.texts.signUpButton, status: vm.viewStatus, action: {})
+                MxLoadingButton(
+                    labelText: vm.texts.signUpButton,
+                    status: vm.viewStatus) {
+                        Task {
+                            await vm.attemptToCreateUser()
+                        }
+                    }
+                    .disabled(vm.formData.isInvalid())
             }
         }
         .padding(.horizontal, 12)
         .alert(vm.texts.errorAlertTitle, isPresented: $vm.isErrorPresent) {
             Button("Accept", action: {})
         } message: {
-            Text("Test")
+            Text(vm.errorDescription)
         }
 
     }
 }
 
 struct SignUpView_Previews: PreviewProvider {
+    static let viewModel = SignUpViewModel(
+        authManager: AuthManager(),
+        realmManager: RealmManager(),
+        firebaseManager: FirebaseManager()
+    )
+
     static var previews: some View {
         NavigationStack {
-            SignUpView(vm: .init())
+            SignUpView(vm: viewModel)
         }
         .previewDevice(.init(rawValue: "iPhone SE (3rd generation)"))
 
         NavigationStack {
-            SignUpView(vm: .init())
+            SignUpView(vm: viewModel)
         }
     }
 }
