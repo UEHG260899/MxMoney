@@ -8,8 +8,16 @@
 import SwiftUI
 
 struct RootView: View {
+
+    @StateObject private var vm = RootViewModel()
+
     var body: some View {
-        LoginFactory.make()
+        if vm.currentUser != nil {
+            // TODO: Change for HomeFactory
+            Text("Home Screen")
+        } else {
+            LoginFactory.make()
+        }
     }
 }
 

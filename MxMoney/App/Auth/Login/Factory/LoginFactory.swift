@@ -9,7 +9,8 @@ import Foundation
 
 enum LoginFactory {
     static func make() -> LoginView {
-        let viewModel = LoginViewModel()
+        let authManager = AuthManager()
+        let viewModel = LoginViewModel(authManager: authManager)
         let loginView = LoginView(vm: viewModel)
         return loginView
     }

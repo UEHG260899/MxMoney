@@ -11,20 +11,23 @@ import XCTest
 final class LoginViewModelTests: XCTestCase {
 
     var sut: LoginViewModel!
+    var mockAuthManager: MockAuthManager!
 
     override func setUp() {
         super.setUp()
-        sut = LoginViewModel()
+        mockAuthManager = MockAuthManager()
+        sut = LoginViewModel(authManager: mockAuthManager)
     }
 
     override func tearDown() {
+        mockAuthManager = nil
         sut = nil
         super.tearDown()
     }
 
-    func test_onInit_emailAndPassword_areEmpty() {
-        XCTAssertTrue(sut.email.isEmpty)
-        XCTAssertTrue(sut.password.isEmpty)
+    func test_onInit_formData_isEmpty() {
+        XCTAssertTrue(sut.formData.email.isEmpty)
+        XCTAssertTrue(sut.formData.password.isEmpty)
     }
 
     func test_onInit_networkStatus_isNone() {
@@ -44,6 +47,10 @@ final class LoginViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isErrorPresent)
     }
 
+    func test_onInit_authManager_isSet() {
+        XCTAssertNotNil(sut.authManager)
+    }
+
     func test_whenViewStatusIsError_isErrorPresent_isSetTo_True() {
         // when
         sut.viewStatus = .error
@@ -57,6 +64,59 @@ final class LoginViewModelTests: XCTestCase {
         sut.viewStatus = .none
 
         XCTAssertFalse(sut.isErrorPresent)
+    }
+
+    func test_attemptToLogin_setsViewStatus_toLoading() async {
+        // when
+        await sut.attemptToLogin()
+
+        // then
+        XCTAssertEqual(sut.viewStatus, .loading)
+    }
+
+    func test_attemptToLogin_callsLogin_onAuthManager() async {
+        // when
+        await sut.attemptToLogin()
+
+        // then
+        XCTAssertTrue(mockAuthManager.calledMethods.contains(.login))
+    }
+
+    func test_attemptToLogin_sendsFormData_toAuthManager() async {
+        // given
+        sut.formData.email = "uriel@gmail"
+        sut.formData.password = "password"
+
+        // when
+        await sut.attemptToLogin()
+
+        // then
+        XCTAssertEqual(mockAuthManager.receivedEmail, sut.formData.email)
+        XCTAssertEqual(mockAuthManager.receivedPassword, sut.formData.password)
+    }
+
+    func test_attemptToLogin_setsViewState_toError_whenLoginFails() async {
+        // given
+        let testError: AppError = .authentication("Some Error")
+        mockAuthManager.shouldCompleteWith = .failure(testError)
+
+        // when
+        await sut.attemptToLogin()
+
+        // then
+        XCTAssertEqual(sut.viewStatus, .error)
+    }
+
+    func test_attemptToLogin_setsErrorDescription_toOneReceivedByError_whenLoginFails() async {
+        // given
+        let testError: AppError = .authentication("Some Error")
+        mockAuthManager.shouldCompleteWith = .failure(testError)
+
+        // when
+        await sut.attemptToLogin()
+
+        // then
+        XCTAssertEqual(sut.errorDescription, "Some Error")
     }
 
 }

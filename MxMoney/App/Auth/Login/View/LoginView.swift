@@ -30,16 +30,21 @@ struct LoginView: View {
                 .mxFont(.mxBold, size: 34)
 
             MxTextField(
-                text: $vm.email,
+                text: $vm.formData.email,
                 labelText: vm.texts.emailLabel,
                 scheme: .init(textfieldType: .emailAddress)
             )
 
-            MxSecureTextField(text: $vm.password, labelText: vm.texts.passwordLabel)
+            MxSecureTextField(text: $vm.formData.password, labelText: vm.texts.passwordLabel)
 
             Spacer()
 
-            MxLoadingButton(labelText: vm.texts.loginButton, status: vm.viewStatus, action: {})
+            MxLoadingButton(labelText: vm.texts.loginButton, status: vm.viewStatus) {
+                Task {
+                    await vm.attemptToLogin()
+                }
+            }
+            .disabled(vm.formData.fieldsAreEmpty())
 
             NavigationLink {
                 SignUpViewFactory.make()
@@ -56,17 +61,20 @@ struct LoginView: View {
         .alert(vm.texts.errorAlertTitle, isPresented: $vm.isErrorPresent) {
             Button("Accept", action: {})
         } message: {
-            Text("Test")
+            Text(vm.errorDescription)
         }
     }
 }
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(vm: .init())
+
+        let viewModel = LoginViewModel(authManager: AuthManager())
+
+        LoginView(vm: viewModel)
             .previewDevice(.init(rawValue: "iPhone SE (3rd generation)"))
 
-        LoginView(vm: .init())
+        LoginView(vm: viewModel)
 
     }
 }
