@@ -14,6 +14,7 @@ class MockAuthManager: AuthManagerProtocol {
         let rawValue: Int
 
         static let register = CalledMethods(rawValue: 1 << 0)
+        static let login = CalledMethods(rawValue: 1 << 1)
     }
 
     var calledMethods: CalledMethods = []
@@ -37,6 +38,25 @@ class MockAuthManager: AuthManagerProtocol {
             }
 
             continuation.resume(returning: "")
+        })
+    }
+
+    func login(email: String, password: String) async throws {
+        calledMethods.insert(.login)
+        receivedEmail = email
+        receivedPassword = password
+        try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<Void, Error>) in
+            if let completeWith = shouldCompleteWith {
+                switch completeWith {
+                case .success:
+                    continuation.resume(returning: ())
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+                return
+            }
+
+            continuation.resume(returning: ())
         })
     }
 }

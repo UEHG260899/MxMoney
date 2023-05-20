@@ -29,4 +29,19 @@ class AuthManager: AuthManagerProtocol {
             }
         })
     }
+
+    func login(email: String, password: String) async throws {
+        try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<Void, Error>) in
+            Auth.auth().signIn(withEmail: email, password: password) { _, error in
+                if let error {
+                    let nsError = error as NSError
+                    let description = FirebaseErrorUtilities.getAuthErrorDescription(for: nsError)
+                    continuation.resume(throwing: AppError.authentication(description))
+                    return
+                }
+
+                continuation.resume(returning: ())
+            }
+        })
+    }
 }
