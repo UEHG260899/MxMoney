@@ -57,12 +57,12 @@ struct SignUpView: View {
                 Spacer(minLength: 20)
                 MxLoadingButton(
                     labelText: vm.texts.signUpButton,
-                    status: vm.viewStatus) {
+                    status: vm.viewStatus,
+                    isDisabled: vm.formData.isInvalid()) {
                         Task {
                             await vm.attemptToCreateUser()
                         }
                     }
-                    .disabled(vm.formData.isInvalid())
             }
         }
         .padding(.horizontal, 12)
