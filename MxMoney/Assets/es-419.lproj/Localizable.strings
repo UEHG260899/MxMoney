@@ -31,3 +31,8 @@
 "Email.Used.Error.Text" = "Ya existe una cuenta con el email introducido";
 "Weak.Password.Error.Text" = "La contraseña debe de contener al menos 6 caracteres";
 "Wrong.Password.Error.Text" = "El email o la contraseña son incorrectos";
+"Invalid.Argument.Error.Text" = "Se trató de realizar una búsqueda con un parámetro inválido";
+"Deadline.Exceeded.Error.Text" = "Se excedió el tiempo de espera para completar la petición";
+"No.Data.Error.Text" = "No se encontraron datos";
+"Already.Exists.Error.Text" = "Ya existe un conjunto de datos iguales, por favor verifica e intenta de nuevo";
+"Unavailable.Error.Text" = "El servicio no esta disponible temporalmente, inténtalo de nuevo más tarde";

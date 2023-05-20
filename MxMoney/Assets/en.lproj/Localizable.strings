@@ -31,3 +31,8 @@
 "Email.Used.Error.Text" = "There´s already an account using the email";
 "Weak.Password.Error.Text" = "Password should be at least 6 characters long";
 "Wrong.Password.Error.Text" = "Wrong email or password";
+"Invalid.Argument.Error.Text" = "A search was executed with an invalid argument";
+"Deadline.Exceeded.Error.Text" = "Connection timeout";
+"No.Data.Error.Text" = "No data was found";
+"Already.Exists.Error.Text" = "There´s already data with the same attributes, please check and try again";
+"Unavailable.Error.Text" = "Service is unavailable, please try again later";

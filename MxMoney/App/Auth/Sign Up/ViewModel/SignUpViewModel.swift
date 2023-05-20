@@ -4,6 +4,7 @@
 //
 //  Created by Uriel Hernandez Gonzalez on 28/03/23.
 //
+// swiftlint:disable force_cast
 
 import Foundation
 import RealmSwift

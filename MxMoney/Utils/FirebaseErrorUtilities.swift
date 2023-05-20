@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseAuth
+import FirebaseFirestore
 
 enum FirebaseErrorUtilities {
 
@@ -31,6 +32,27 @@ enum FirebaseErrorUtilities {
         default:
             return NSLocalizedString("Default.Error.Text", comment: "")
         }
-        
+
+    }
+
+    static func getFirestoreErrorDescription(for error: NSError) -> String {
+        guard let firebaseError = FirestoreErrorCode.Code(rawValue: error.code) else {
+            return NSLocalizedString("Default.Error.Text", comment: "")
+        }
+
+        switch firebaseError {
+        case .invalidArgument:
+            return NSLocalizedString("Invalid.Argument.Error.Text", comment: "")
+        case .deadlineExceeded:
+            return NSLocalizedString("Deadline.Exceeded.Error.Text", comment: "")
+        case .notFound:
+            return NSLocalizedString("No.Data.Error.Text", comment: "")
+        case .alreadyExists:
+            return NSLocalizedString("Already.Exists.Error.Text", comment: "")
+        case .unavailable:
+            return NSLocalizedString("Unavailable.Error.Text", comment: "")
+        default:
+            return NSLocalizedString("Default.Error.Text", comment: "")
+        }
     }
 }

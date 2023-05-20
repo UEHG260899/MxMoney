@@ -70,4 +70,52 @@ final class FirebaseErrorUtilitiesTests: XCTestCase {
         XCTAssertEqual(description, "El email o la contraseña son incorrectos")
     }
 
+    func test_getFirestoreErrorDescription_returnsDefaultErrorText_whenErrorIsntAuthError() {
+        // when
+        let description = FirebaseErrorUtilities.getFirestoreErrorDescription(for: testError(code: 397489234798237489))
+
+        // then
+        XCTAssertEqual(description, "Algo misterioso pasó")
+    }
+
+    func test_getFirestoreErrorDescription_returnsInvalidArgument_whenErrorCodeIs3() {
+        // when
+        let description = FirebaseErrorUtilities.getFirestoreErrorDescription(for: testError(code: 3))
+
+        // then
+        XCTAssertEqual(description, "Se trató de realizar una búsqueda con un parámetro inválido")
+    }
+
+    func test_getFirestoreErrorDescription_returnsDeadlineExceeded_whenErrorCodeIs4() {
+        // when
+        let description = FirebaseErrorUtilities.getFirestoreErrorDescription(for: testError(code: 4))
+
+        // then
+        XCTAssertEqual(description, "Se excedió el tiempo de espera para completar la petición")
+    }
+
+    func test_getFirestoreErrorDescription_returnsNotFound_whenErrorCodeIs5() {
+        // when
+        let description = FirebaseErrorUtilities.getFirestoreErrorDescription(for: testError(code: 5))
+
+        // then
+        XCTAssertEqual(description, "No se encontraron datos")
+    }
+
+    func test_getFirestoreErrorDescription_returnsAlreadyExists_whenErrorCodeIs6() {
+        // when
+        let description = FirebaseErrorUtilities.getFirestoreErrorDescription(for: testError(code: 6))
+
+        // then
+        XCTAssertEqual(description, "Ya existe un conjunto de datos iguales, por favor verifica e intenta de nuevo")
+    }
+
+    func test_getFirestoreErrorDescription_returnsUnavailable_whenErrorCodeIs14() {
+        // when
+        let description = FirebaseErrorUtilities.getFirestoreErrorDescription(for: testError(code: 14))
+
+        // then
+        XCTAssertEqual(description, "El servicio no esta disponible temporalmente, inténtalo de nuevo más tarde")
+    }
+
 }
