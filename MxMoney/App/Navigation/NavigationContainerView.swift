@@ -10,7 +10,7 @@ import SwiftUI
 struct NavigationContainerView: View {
 
     private let tabComponents: [TabComponent] = [
-        .init(contentView: Text("Hola"), tabItem: Label("Home.Tab.Text", systemImage: "house")),
+        .init(contentView: HomeFactory.make(), tabItem: Label("Home.Tab.Text", systemImage: "house")),
         .init(contentView: Text("Ajustes"), tabItem: Label("Settings.Tab.Text", systemImage: "gear"))
     ]
 
