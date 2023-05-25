@@ -13,8 +13,7 @@ struct RootView: View {
 
     var body: some View {
         if vm.currentUser != nil {
-            // TODO: Change for HomeFactory
-            Text("Home Screen")
+            NavigationContainerView()
         } else {
             LoginFactory.make()
         }

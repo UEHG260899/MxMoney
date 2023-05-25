@@ -22,6 +22,10 @@
 "Signup.Confirm.Password.Text" = "Confirm Password";
 "Signup.Signup.Button" = "Sign Up";
 
+// TAB BAR
+"Home.Tab.Text" = "Home";
+"Settings.Tab.Text" = "Settings";
+
 // ERRORS
 "Error.Alert.Title.Text" = "Something went wrong";
 "Default.Error.Text" = "Something mysterious happened";
