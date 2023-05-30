@@ -13,13 +13,16 @@ struct HomeView<ViewModel: HomeViewModelProtocol>: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
+            ZStack(alignment: .bottom) {
 
                 Color.mainColor
                     .ignoresSafeArea()
 
                 ScrollView {
-                    HomeBalanceGrid()
+                    VStack(spacing: 34) {
+                        HomeBalanceGrid()
+                        HomeListView()
+                    }
                 }
             }
             .toolbar {
