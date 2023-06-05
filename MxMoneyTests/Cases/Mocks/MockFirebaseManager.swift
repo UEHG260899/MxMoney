@@ -29,4 +29,11 @@ class MockFirebaseManager: FirebaseManagerProtocol {
         })
     }
 
+    func fetch<T: Decodable>(
+        fromCollection collection: FirestoreCollection,
+        whereQueryIsEqualTo query: CustomQuery
+    ) async throws -> [T]  {
+        return [T]()
+    }
+
 }

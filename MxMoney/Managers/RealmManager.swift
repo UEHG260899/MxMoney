@@ -13,8 +13,10 @@ class RealmManager: RealmManagerProtocol {
     let realm = try! Realm()
 
     func save(_ object: Object) {
-        try! realm.write {
-            realm.add(object)
+        DispatchQueue.main.async {
+            try! self.realm.write {
+                self.realm.add(object)
+            }
         }
     }
 }

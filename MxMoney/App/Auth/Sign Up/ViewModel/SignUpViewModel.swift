@@ -66,6 +66,8 @@ class SignUpViewModel: ObservableObject {
             switch error {
             case .authentication(let description):
                 errorDescription = description
+            default:
+                debugPrint("")
             }
         }
     }

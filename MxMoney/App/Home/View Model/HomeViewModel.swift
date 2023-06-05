@@ -7,6 +7,15 @@
 
 import SwiftUI
 
-class HomeViewModel: ObservableObject, HomeViewModelProtocol {
-    
+class HomeViewModel: HomeViewModelProtocol {
+
+    @Published var viewStatus: ViewStatus = .loading
+    let firebaseManager: FirebaseManagerProtocol
+
+    init(firebaseManager: FirebaseManagerProtocol) {
+        self.firebaseManager = firebaseManager
+    }
+
+    func fetchData() async {
+    }
 }

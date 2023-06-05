@@ -9,7 +9,8 @@ import SwiftUI
 
 enum HomeFactory {
     static func make() -> some View {
-        let viewModel = HomeViewModel()
+        let firebaseManager = FirebaseManager()
+        let viewModel = HomeViewModel(firebaseManager: firebaseManager)
         let view = HomeView(vm: viewModel)
         return view
     }

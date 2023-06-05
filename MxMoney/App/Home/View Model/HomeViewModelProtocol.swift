@@ -5,8 +5,9 @@
 //  Created by Uriel Hernandez Gonzalez on 24/05/23.
 //
 
-import Foundation
+import SwiftUI
 
-protocol HomeViewModelProtocol {
-    
+protocol HomeViewModelProtocol: ObservableObject {
+    var viewStatus: ViewStatus { get set }
+    func fetchData() async
 }
