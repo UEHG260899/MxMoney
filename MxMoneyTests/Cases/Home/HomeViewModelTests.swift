@@ -4,6 +4,7 @@
 //
 //  Created by Uriel Hernandez Gonzalez on 04/06/23.
 //
+// swiftlint:disable force_cast
 
 import XCTest
 @testable import MxMoney
@@ -11,14 +12,17 @@ import XCTest
 final class HomeViewModelTests: XCTestCase {
 
     var sut: HomeViewModel!
+    var mockFirebaseManager: MockFirebaseManager!
 
     override func setUp() {
         super.setUp()
-        sut = HomeViewModel(firebaseManager: MockFirebaseManager())
+        mockFirebaseManager = MockFirebaseManager()
+        sut = HomeViewModel(firebaseManager: mockFirebaseManager)
     }
 
     override func tearDown() {
         sut = nil
+        mockFirebaseManager = nil
         super.tearDown()
     }
 
@@ -28,5 +32,24 @@ final class HomeViewModelTests: XCTestCase {
 
     func test_onInit_viewStatus_isLoading() {
         XCTAssertEqual(sut.viewStatus, .loading)
+    }
+
+    func test_onInit_transactions_areEmpty() {
+        XCTAssertEqual(sut.transactions.count, 0)
+    }
+
+    func test_whenFetchData_callsFetch_onFirebaseManager_andSendsCorrectQuery() async {
+        // given
+        let userId = UserDefaults.standard.string(forKey: "userId")
+        let testQuery = CustomQuery(fieldName: "userId", filterValue: userId ?? "")
+
+        // when
+        await sut.fetchData()
+
+        // then
+        XCTAssertTrue(mockFirebaseManager.calledMethods.contains(.fetch))
+        XCTAssertEqual(testQuery.filterValue as! String,
+                       (mockFirebaseManager.receivedCustomQuery?.filterValue as! String))
+        XCTAssertEqual(testQuery.fieldName, mockFirebaseManager.receivedCustomQuery?.fieldName)
     }
 }

@@ -14,6 +14,7 @@ class RootViewModel: ObservableObject {
     init() {
         Auth.auth().addStateDidChangeListener { auth, user in
             self.currentUser = user
+            UserDefaults.standard.set(user?.uid, forKey: "userId")
         }
     }
 }

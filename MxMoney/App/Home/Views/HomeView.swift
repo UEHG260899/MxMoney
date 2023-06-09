@@ -49,7 +49,7 @@ struct HomeView<ViewModel: HomeViewModelProtocol>: View {
             ScrollView {
                 VStack(spacing: 34) {
                     HomeBalanceGrid()
-                    HomeListView()
+                    HomeListView(transactions: vm.transactions)
                 }
             }
         }
@@ -61,7 +61,8 @@ struct HomeView_Previews: PreviewProvider {
     static let devices = ["iPhone SE (3rd generation)", "iPhone 11", "iPhone 14 Pro Max"]
 
     class MockVm: HomeViewModelProtocol {
-        var viewStatus: ViewStatus = .loading
+        var transactions = [MoneyTransaction]()
+        var viewStatus: ViewStatus = .completed
         func fetchData() async {}
     }
 
