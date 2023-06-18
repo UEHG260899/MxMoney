@@ -38,7 +38,7 @@ final class HomeViewModelTests: XCTestCase {
         XCTAssertEqual(sut.transactions.count, 0)
     }
 
-    func test_whenFetchData_callsFetch_onFirebaseManager_andSendsCorrectQuery() async {
+    func test_whenFetchData_callsFetchRecent_onFirebaseManager_andSendsCorrectQuery() async {
         // given
         let userId = UserDefaults.standard.string(forKey: "userId")
         let testQuery = CustomQuery(fieldName: "userId", filterValue: userId ?? "")
@@ -47,7 +47,7 @@ final class HomeViewModelTests: XCTestCase {
         await sut.fetchData()
 
         // then
-        XCTAssertTrue(mockFirebaseManager.calledMethods.contains(.fetch))
+        XCTAssertTrue(mockFirebaseManager.calledMethods.contains(.fetchRecent))
         XCTAssertEqual(testQuery.filterValue as! String,
                        (mockFirebaseManager.receivedCustomQuery?.filterValue as! String))
         XCTAssertEqual(testQuery.fieldName, mockFirebaseManager.receivedCustomQuery?.fieldName)

@@ -9,12 +9,15 @@ import SwiftUI
 
 struct MxTransactionCardView: View {
 
+    let moneyTransaction: MoneyTransaction
     var scheme: MxTransportCardViewScheme = .income
 
     var body: some View {
         HStack(spacing: scheme.mainHorizontalSpacing) {
-            Image(systemName: "house")
+
+            Image(systemName: moneyTransaction.imageName)
                 .resizable()
+                .scaledToFit()
                 .frame(width: scheme.imageSize.width, height: scheme.imageSize.height)
                 .padding(scheme.imagePadding)
                 .foregroundColor(scheme.imageForegroundColor)
@@ -22,17 +25,19 @@ struct MxTransactionCardView: View {
                 .clipShape(RoundedRectangle(cornerRadius: scheme.imageCornerRadius))
 
             VStack(alignment: scheme.transactionHorizontalAlignment, spacing: scheme.transactionVerticalSpacing) {
-                Text("Metro Railway")
+
+                Text(moneyTransaction.title.uppercased())
                     .mxFont(scheme.transactionTitleFont, size: scheme.transactionTitleFontSize)
                     .foregroundColor(scheme.transactionTitleColor)
 
-                Text("Transportation")
+                Text(moneyTransaction.category.stringValue)
                     .mxFont(scheme.transactionTypeFont, size: scheme.transactionTypeFontSize)
                     .foregroundColor(scheme.transactionTypeColor)
             }
             .frame(maxWidth: .infinity, alignment: scheme.transactionFrameAlignment)
 
             VStack(alignment: scheme.detailsHorizontalAlignment, spacing: scheme.detailsVerticalSpacing) {
+
                 Text("+$30.00")
                     .mxFont(scheme.detailsTitleFont, size: scheme.detailsTitleFontSize)
                     .foregroundColor(scheme.detailsTitleFontColor)
@@ -58,8 +63,8 @@ struct MxTransactionCardView_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(devices, id: \.self) { device in
             VStack {
-                MxTransactionCardView()
-                MxTransactionCardView(scheme: .expense)
+                MxTransactionCardView(moneyTransaction: .mock)
+                MxTransactionCardView(moneyTransaction: .mock, scheme: .expense)
             }
             .previewDevice(PreviewDevice(rawValue: device))
             .previewDisplayName(device)

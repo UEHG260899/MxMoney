@@ -20,7 +20,7 @@ struct HomeListView: View {
 
             LazyVStack(spacing: 12) {
                 ForEach(transactions) { transaction in
-                    MxTransactionCardView()
+                    MxTransactionCardView(moneyTransaction: transaction)
                 }
             }
         }

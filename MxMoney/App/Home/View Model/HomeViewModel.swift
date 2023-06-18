@@ -22,7 +22,7 @@ class HomeViewModel: HomeViewModelProtocol {
     func fetchData() async {
         do {
             let userdId = UserDefaults.standard.string(forKey: "userId")
-            transactions = try await firebaseManager.fetch(fromCollection: .transactions,
+            transactions = try await firebaseManager.fetchRecent(fromCollection: .transactions,
                                                            whereQueryIsEqualTo: .init(fieldName: "userId", filterValue: userdId))
             viewStatus = .completed
         } catch {

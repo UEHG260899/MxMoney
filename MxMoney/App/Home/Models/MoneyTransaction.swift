@@ -13,9 +13,35 @@ struct MoneyTransaction: Codable, Identifiable {
     let category: TransactionCategory
     let type: TransactionType
     let amount: Double
-    let date: String
+    let timeStamp: TimeInterval
     let userId: String
+
+    var imageName: String {
+        switch self.category {
+        case .food:
+            return "fork.knife.circle"
+        case .services:
+            return "powerplug"
+        case .entertainment:
+            return "tv.circle"
+        case .shopping:
+            return "cart.circle"
+        case .miscellaneous:
+            return "m.circle"
+        }
+    }
 }
+
+#if DEBUG
+extension MoneyTransaction {
+    static let mock = MoneyTransaction(title: "Groceries",
+                                       category: .food,
+                                       type: .expense,
+                                       amount: 200,
+                                       timeStamp: Date().timeIntervalSince1970,
+                                       userId: "Some Id")
+}
+#endif
 
 enum TransactionType: String, Codable {
     case income
@@ -28,4 +54,19 @@ enum TransactionCategory: Int, Codable {
     case entertainment
     case shopping
     case miscellaneous
+
+    var stringValue: String {
+        switch self {
+        case .food:
+            return "Food"
+        case .services:
+            return "Services"
+        case .entertainment:
+            return "Entertainment"
+        case .shopping:
+            return "Shopping"
+        case .miscellaneous:
+            return "Miscellaneous"
+        }
+    }
 }

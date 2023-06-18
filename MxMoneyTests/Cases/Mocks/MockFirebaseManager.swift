@@ -14,7 +14,8 @@ class MockFirebaseManager: FirebaseManagerProtocol {
         let rawValue: Int
 
         static let store = CalledMethods(rawValue: 1 << 0)
-        static let fetch = CalledMethods(rawValue: 1 << 0)
+        static let fetch = CalledMethods(rawValue: 1 << 1)
+        static let fetchRecent = CalledMethods(rawValue: 1 << 2)
     }
 
     var calledMethods: CalledMethods = []
@@ -34,8 +35,17 @@ class MockFirebaseManager: FirebaseManagerProtocol {
     func fetch<T: Decodable>(
         fromCollection collection: FirestoreCollection,
         whereQueryIsEqualTo query: CustomQuery
-    ) async throws -> [T]  {
+    ) async throws -> [T] {
         calledMethods.insert(.fetch)
+        receivedCustomQuery = query
+        return [T]()
+    }
+
+    func fetchRecent<T: Decodable>(
+        fromCollection collection: FirestoreCollection,
+        whereQueryIsEqualTo query: CustomQuery
+    ) async throws -> [T] {
+        calledMethods.insert(.fetchRecent)
         receivedCustomQuery = query
         return [T]()
     }
