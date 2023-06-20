@@ -10,7 +10,23 @@ import SwiftUI
 struct MxTransactionCardView: View {
 
     let moneyTransaction: MoneyTransaction
-    var scheme: MxTransportCardViewScheme = .income
+    var scheme: MxTransportCardViewScheme = .init()
+
+    private var transactionAmountColor: Color {
+        guard moneyTransaction.type == .income else {
+            return .expenseColor
+        }
+
+        return .incomeColor
+    }
+
+    private var amountString: String {
+        guard moneyTransaction.type == .income else {
+            return "-" + moneyTransaction.amount.toCurrencyString()
+        }
+
+        return "+" + moneyTransaction.amount.toCurrencyString()
+    }
 
     var body: some View {
         HStack(spacing: scheme.mainHorizontalSpacing) {
@@ -27,23 +43,27 @@ struct MxTransactionCardView: View {
             VStack(alignment: scheme.transactionHorizontalAlignment, spacing: scheme.transactionVerticalSpacing) {
 
                 Text(moneyTransaction.title.uppercased())
-                    .mxFont(scheme.transactionTitleFont, size: scheme.transactionTitleFontSize)
+                    .mxFont(scheme.transactionTitleFont,
+                            size: scheme.transactionTitleFontSize)
                     .foregroundColor(scheme.transactionTitleColor)
 
                 Text(moneyTransaction.category.stringValue)
-                    .mxFont(scheme.transactionTypeFont, size: scheme.transactionTypeFontSize)
+                    .mxFont(scheme.transactionTypeFont,
+                            size: scheme.transactionTypeFontSize)
                     .foregroundColor(scheme.transactionTypeColor)
             }
             .frame(maxWidth: .infinity, alignment: scheme.transactionFrameAlignment)
 
             VStack(alignment: scheme.detailsHorizontalAlignment, spacing: scheme.detailsVerticalSpacing) {
 
-                Text("+$30.00")
-                    .mxFont(scheme.detailsTitleFont, size: scheme.detailsTitleFontSize)
-                    .foregroundColor(scheme.detailsTitleFontColor)
+                Text(amountString)
+                    .mxFont(scheme.detailsTitleFont,
+                            size: scheme.detailsTitleFontSize)
+                    .foregroundColor(transactionAmountColor)
 
-                Text("Oct 30, 2021")
-                    .mxFont(scheme.detailsDateFont, size: scheme.detailsDateFontSize)
+                Text(moneyTransaction.timeStamp.toDateString())
+                    .mxFont(scheme.detailsDateFont,
+                            size: scheme.detailsDateFontSize)
                     .foregroundColor(scheme.detailsDateFontColor)
             }
 
@@ -64,7 +84,7 @@ struct MxTransactionCardView_Previews: PreviewProvider {
         ForEach(devices, id: \.self) { device in
             VStack {
                 MxTransactionCardView(moneyTransaction: .mock)
-                MxTransactionCardView(moneyTransaction: .mock, scheme: .expense)
+                MxTransactionCardView(moneyTransaction: .mockExpense)
             }
             .previewDevice(PreviewDevice(rawValue: device))
             .previewDisplayName(device)

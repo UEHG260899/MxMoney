@@ -36,10 +36,17 @@ struct MoneyTransaction: Codable, Identifiable {
 extension MoneyTransaction {
     static let mock = MoneyTransaction(title: "Groceries",
                                        category: .food,
-                                       type: .expense,
+                                       type: .income,
                                        amount: 200,
                                        timeStamp: Date().timeIntervalSince1970,
                                        userId: "Some Id")
+
+    static let mockExpense = MoneyTransaction(title: "Groceries",
+                                              category: .food,
+                                              type: .income,
+                                              amount: 200,
+                                              timeStamp: Date().timeIntervalSince1970,
+                                              userId: "Some Id")
 }
 #endif
 
