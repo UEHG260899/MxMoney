@@ -48,7 +48,7 @@ struct HomeView<ViewModel: HomeViewModelProtocol>: View {
 
             ScrollView {
                 VStack(spacing: 34) {
-                    HomeBalanceGrid()
+                    HomeBalanceGrid(transactionsTotal: vm.transactionsTotal)
                     HomeListView(transactions: vm.transactions)
                 }
             }
@@ -62,6 +62,7 @@ struct HomeView_Previews: PreviewProvider {
 
     class MockVm: HomeViewModelProtocol {
         var transactions = [MoneyTransaction]()
+        var transactionsTotal: TransactionsTotal = .init()
         var viewStatus: ViewStatus = .completed
         func fetchData() async {}
     }

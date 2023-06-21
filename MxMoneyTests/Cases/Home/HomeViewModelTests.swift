@@ -38,6 +38,12 @@ final class HomeViewModelTests: XCTestCase {
         XCTAssertEqual(sut.transactions.count, 0)
     }
 
+    func test_onInit_transactionsTotalValues_areEqual_to0() {
+        [sut.transactionsTotal.total, sut.transactionsTotal.totalExpense, sut.transactionsTotal.totalIncome].forEach {
+            XCTAssertEqual($0, 0)
+        }
+    }
+
     func test_whenFetchData_callsFetchRecent_onFirebaseManager_andSendsCorrectQuery() async {
         // given
         let userId = UserDefaults.standard.string(forKey: "userId")
@@ -51,5 +57,13 @@ final class HomeViewModelTests: XCTestCase {
         XCTAssertEqual(testQuery.filterValue as! String,
                        (mockFirebaseManager.receivedCustomQuery?.filterValue as! String))
         XCTAssertEqual(testQuery.fieldName, mockFirebaseManager.receivedCustomQuery?.fieldName)
+    }
+
+    func test_whenFetchData_callsFetchBetween_onFirebaseManager() async {
+        // when
+        await sut.fetchData()
+
+        // then
+        XCTAssertTrue(mockFirebaseManager.calledMethods.contains(.fetchBetween))
     }
 }

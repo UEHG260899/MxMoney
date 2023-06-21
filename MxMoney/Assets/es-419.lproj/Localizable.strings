@@ -40,3 +40,8 @@
 "No.Data.Error.Text" = "No se encontraron datos";
 "Already.Exists.Error.Text" = "Ya existe un conjunto de datos iguales, por favor verifica e intenta de nuevo";
 "Unavailable.Error.Text" = "El servicio no esta disponible temporalmente, inténtalo de nuevo más tarde";
+
+// HOME
+"Home.Total.Balance.Text" = "BALANCE TOTAL";
+"Home.Total.Income.Text" = "INGRESOS TOTALES";
+"Home.Total.Expense.Text" = "GASTOS TOTALES";

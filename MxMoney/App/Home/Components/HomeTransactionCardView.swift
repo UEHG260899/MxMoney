@@ -9,6 +9,8 @@ import SwiftUI
 
 struct HomeTransactionCardView: View {
 
+    let titleLocalizedKey: LocalizedStringKey
+    let transactionAmount: Double
     var scheme: HomeTransactionCardViewScheme = .defaultIncome
 
     var body: some View {
@@ -20,11 +22,13 @@ struct HomeTransactionCardView: View {
                     .padding([.top, .trailing], scheme.imagePadding)
 
                 VStack(alignment: scheme.textHorizontalAlignment, spacing: scheme.textVerticalSpacing) {
-                    Text("TOTAL INCOME")
+                    Text(titleLocalizedKey)
                         .mxFont(scheme.titleFont, size: scheme.titleFontSize)
+                        .multilineTextAlignment(.leading)
                         .foregroundColor(scheme.titleFontColor)
+                        .padding(.trailing, scheme.imagePadding)
 
-                    Text("+$23,000")
+                    Text(transactionAmount.toCurrencyString())
                         .mxFont(scheme.descriptionFont, size: scheme.descriptionFontSize)
                         .foregroundColor(scheme.descriptionFontColor)
                 }
@@ -41,6 +45,7 @@ struct HomeTransactionCardView: View {
 
 struct HomeTransactionCardView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeTransactionCardView()
+        HomeTransactionCardView(titleLocalizedKey: "",
+                                transactionAmount: 100)
     }
 }

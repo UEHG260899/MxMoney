@@ -10,5 +10,6 @@ import SwiftUI
 protocol HomeViewModelProtocol: ObservableObject {
     var viewStatus: ViewStatus { get set }
     var transactions: [MoneyTransaction] { get }
+    var transactionsTotal: TransactionsTotal { get }
     func fetchData() async
 }

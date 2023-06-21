@@ -12,3 +12,12 @@ struct CustomQuery {
     let fieldName: String
     let filterValue: Any
 }
+
+struct BetweenQuery {
+    let filterFieldName: String
+    let filterValue: Any
+    let fieldName: String
+    let lowerLimit: Any
+    let upperLimit: Any
+}
+

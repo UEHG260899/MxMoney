@@ -54,7 +54,35 @@ class FirebaseManager: FirebaseManagerProtocol {
                     continuation.resume(returning: retrievedData)
                 }
         }
+    }
 
+    func fetch<T: Decodable>(
+        fromCollection collection: FirestoreCollection,
+        whereQueryBetween query: BetweenQuery
+    ) async throws -> [T] {
+
+        return try await withCheckedThrowingContinuation { continuation in
+            Firestore.firestore().collection(collection.rawValue)
+                .whereField(query.filterFieldName, isEqualTo: query.filterValue)
+                .whereField(query.fieldName, isGreaterThan: query.lowerLimit)
+                .whereField(query.fieldName, isLessThan: query.upperLimit)
+                .getDocuments { snapshot, error in
+                    if let error {
+                        let nsError = error as NSError
+                        let description = FirebaseErrorUtilities.getFirestoreErrorDescription(for: nsError)
+                        continuation.resume(throwing: AppError.firestore(description))
+                        return
+                    }
+
+                    guard let snapshot else {
+                        continuation.resume(throwing: AppError.firestore("No data was found"))
+                        return
+                    }
+
+                    let retrievedData = snapshot.documents.compactMap { try? $0.data(as: T.self) }
+                    continuation.resume(returning: retrievedData)
+                }
+        }
     }
 
     func fetchRecent<T: Decodable>(
