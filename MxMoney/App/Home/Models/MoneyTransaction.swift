@@ -63,6 +63,7 @@ enum TransactionCategory: Int, Codable {
     case miscellaneous
 
     var stringValue: String {
+        // TODO: Localize
         switch self {
         case .food:
             return "Food"
