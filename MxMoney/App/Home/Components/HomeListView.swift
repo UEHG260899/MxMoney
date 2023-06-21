@@ -8,16 +8,19 @@
 import SwiftUI
 
 struct HomeListView: View {
+
+    let transactions: [MoneyTransaction]
+
     var body: some View {
         VStack(alignment: .leading, spacing: 42) {
-            Text("Recent Transaction")
+            Text("Recent Transactions")
                 .mxFont(.mxBold, size: 17)
                 .foregroundColor(.textWhiteColor)
                 .padding(.leading, 8)
 
             LazyVStack(spacing: 12) {
-                ForEach(0..<5) { _ in
-                    MxTransactionCardView()
+                ForEach(transactions) { transaction in
+                    MxTransactionCardView(moneyTransaction: transaction)
                 }
             }
         }
@@ -31,7 +34,7 @@ struct HomeListView_Previews: PreviewProvider {
             Color.mainColor
                 .ignoresSafeArea()
 
-            HomeListView()
+            HomeListView(transactions: [MoneyTransaction]())
         }
     }
 }

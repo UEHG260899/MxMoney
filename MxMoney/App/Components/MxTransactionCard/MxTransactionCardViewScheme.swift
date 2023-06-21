@@ -30,13 +30,12 @@ struct MxTransportCardViewScheme {
     var transactionTypeFontSize: CGFloat
     var transactionTypeColor: Color
     var transactionFrameAlignment: Alignment
-    
+
     // MARK: Details
     var detailsHorizontalAlignment: HorizontalAlignment
     var detailsVerticalSpacing: CGFloat
     var detailsTitleFont: MxFont
     var detailsTitleFontSize: CGFloat
-    var detailsTitleFontColor: Color
     var detailsDateFont: MxFont
     var detailsDateFontSize: CGFloat
     var detailsDateFontColor: Color
@@ -64,7 +63,6 @@ struct MxTransportCardViewScheme {
         detailsVerticalSpacing: CGFloat = 16,
         detailsTitleFont: MxFont = .mxBold,
         detailsTitleFontSize: CGFloat = 17,
-        detailsTitleFontColor: Color = .incomeColor,
         detailsDateFont: MxFont = .mxRegular,
         detailsDateFontSize: CGFloat = 13,
         detailsDateFontColor: Color = .textLightColor
@@ -91,14 +89,8 @@ struct MxTransportCardViewScheme {
         self.detailsVerticalSpacing = detailsVerticalSpacing
         self.detailsTitleFont = detailsTitleFont
         self.detailsTitleFontSize = detailsTitleFontSize
-        self.detailsTitleFontColor = detailsTitleFontColor
         self.detailsDateFont = detailsDateFont
         self.detailsDateFontSize = detailsDateFontSize
         self.detailsDateFontColor = detailsDateFontColor
     }
-}
-
-extension MxTransportCardViewScheme {
-    static let income = MxTransportCardViewScheme()
-    static let expense = MxTransportCardViewScheme(detailsTitleFontColor: .expenseColor)
 }

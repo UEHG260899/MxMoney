@@ -9,4 +9,6 @@ import Foundation
 
 enum AppError: Error {
     case authentication(String)
+    case `internal`(String)
+    case firestore(String)
 }
