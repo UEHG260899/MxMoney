@@ -20,7 +20,7 @@ struct HomeView<ViewModel: HomeViewModelProtocol>: View {
                 case .completed, .none:
                     contentView
                 case .error:
-                    MxErrorView(errorDescription: "Something Happened")
+                    MxErrorView(errorDescription: vm.errorDescription)
                 }
             }
             .toolbar {
@@ -64,6 +64,7 @@ struct HomeView_Previews: PreviewProvider {
         var transactions = [MoneyTransaction]()
         var transactionsTotal: TransactionsTotal = .init()
         var viewStatus: ViewStatus = .completed
+        var errorDescription = ""
         func fetchData() async {}
     }
 
