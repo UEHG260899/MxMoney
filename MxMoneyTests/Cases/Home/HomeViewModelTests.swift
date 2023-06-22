@@ -59,11 +59,54 @@ final class HomeViewModelTests: XCTestCase {
         XCTAssertEqual(testQuery.fieldName, mockFirebaseManager.receivedCustomQuery?.fieldName)
     }
 
+    func test_whenFetchData_callsFetchRecent_andCompletes_withError_viewState_isError() async {
+        // when
+        await sut.fetchData()
+
+        // then
+        XCTAssertEqual(sut.viewStatus, .error)
+    }
+
+    func test_whenFetchData_callsFetchRecent_andCompletes_withSuccess_viewState_isCompleted_andTransactions_areSet() async {
+        // given
+        let expectedTransactionsCount = 3
+        mockFirebaseManager.shouldCompleteWith = .success("200_home_transactions")
+
+        // when
+        await sut.fetchData()
+
+        // then
+        XCTAssertEqual(sut.viewStatus, .completed)
+        XCTAssertEqual(sut.transactions.count, expectedTransactionsCount)
+    }
+
     func test_whenFetchData_callsFetchBetween_onFirebaseManager() async {
         // when
         await sut.fetchData()
 
         // then
         XCTAssertTrue(mockFirebaseManager.calledMethods.contains(.fetchBetween))
+    }
+
+    func test_whenFetchData_callsFetchBetween_andCompletes_withError_viewState_isError() async {
+        // when
+        await sut.fetchData()
+
+        // then
+        XCTAssertEqual(sut.viewStatus, .error)
+    }
+
+    func test_whenFetchData_callsFetchBetween_andCompletes_withSuccess_viewState_isCompleted_andTransactionsTotal_isSet() async {
+        // given
+        mockFirebaseManager.shouldCompleteWith = .success("200_home_transactions")
+
+        // when
+        await sut.fetchData()
+
+        // then
+        XCTAssertEqual(sut.viewStatus, .completed)
+        XCTAssertEqual(sut.transactionsTotal.total, 200)
+        XCTAssertEqual(sut.transactionsTotal.totalIncome, 400)
+        XCTAssertEqual(sut.transactionsTotal.totalExpense, 200)
     }
 }

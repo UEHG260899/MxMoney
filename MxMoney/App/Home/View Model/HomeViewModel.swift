@@ -56,6 +56,7 @@ class HomeViewModel: HomeViewModelProtocol {
             self.transactionsTotal = calculateTotalTransactions(from: transactionsFromThisMonth)
             viewStatus = .completed
         } catch {
+            viewStatus = .error
             debugPrint(error.localizedDescription)
         }
     }

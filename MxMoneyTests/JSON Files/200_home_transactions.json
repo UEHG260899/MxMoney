@@ -1,0 +1,29 @@
+[
+    {
+        "id": "ojopjaeonfseofns",
+        "title": "Some title",
+        "type": "income",
+        "amount": 200,
+        "category": 1,
+        "timeStamp": 120304968,
+        "userId": "odopdjawopjdawopjdawpo"
+    },
+    {
+        "id": "nwmdnoenfne",
+        "title": "Some title 1",
+        "type": "expense",
+        "amount": 200,
+        "category": 1,
+        "timeStamp": 17274748595,
+        "userId": "odopdjawopjdawopjdawpo"
+    },
+    {
+        "id": "qkjdshwhw",
+        "title": "Some title 1",
+        "type": "income",
+        "amount": 200,
+        "category": 1,
+        "timeStamp": 1039847575,
+        "userId": "odopdjawopjdawopjdawpo"
+    }
+]
