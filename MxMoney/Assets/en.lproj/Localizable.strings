@@ -40,6 +40,7 @@
 "No.Data.Error.Text" = "No data was found";
 "Already.Exists.Error.Text" = "There´s already data with the same attributes, please check and try again";
 "Unavailable.Error.Text" = "Service is unavailable, please try again later";
+"Error.View.Title.Text" = "Whooops";
 
 // HOME
 "Home.Total.Balance.Text" = "TOTAL BALANCE";

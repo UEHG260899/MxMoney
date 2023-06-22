@@ -20,7 +20,7 @@ struct HomeView<ViewModel: HomeViewModelProtocol>: View {
                 case .completed, .none:
                     contentView
                 case .error:
-                    EmptyView()
+                    MxErrorView(errorDescription: "Something Happened")
                 }
             }
             .toolbar {
