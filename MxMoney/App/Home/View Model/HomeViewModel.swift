@@ -29,6 +29,7 @@ class HomeViewModel: HomeViewModelProtocol {
     @Published var viewStatus: ViewStatus = .loading
     @Published var transactions = [MoneyTransaction]()
     @Published var transactionsTotal = TransactionsTotal()
+    @Published var errorDescription = ""
 
     let firebaseManager: FirebaseManagerProtocol
 
@@ -57,7 +58,7 @@ class HomeViewModel: HomeViewModelProtocol {
             viewStatus = .completed
         } catch {
             viewStatus = .error
-            debugPrint(error.localizedDescription)
+            handleError(error)
         }
     }
 
@@ -66,5 +67,15 @@ class HomeViewModel: HomeViewModelProtocol {
         let totalExpense = transactions.filter { $0.type == .expense }.map(\.amount).reduce(0, +)
         let total = totalIncome - totalExpense
         return .init(total: total, totalIncome: totalIncome, totalExpense: totalExpense)
+    }
+
+    private func handleError(_ error: Error) {
+        guard let appError = error as? AppError else {
+            return
+        }
+
+        if case .firestore(let description) = appError {
+            errorDescription = description
+        }
     }
 }

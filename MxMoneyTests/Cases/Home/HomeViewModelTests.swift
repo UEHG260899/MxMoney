@@ -44,6 +44,10 @@ final class HomeViewModelTests: XCTestCase {
         }
     }
 
+    func test_onInit_errorDescription_isEmpty() {
+        XCTAssertTrue(sut.errorDescription.isEmpty)
+    }
+
     func test_whenFetchData_callsFetchRecent_onFirebaseManager_andSendsCorrectQuery() async {
         // given
         let userId = UserDefaults.standard.string(forKey: "userId")
@@ -108,5 +112,24 @@ final class HomeViewModelTests: XCTestCase {
         XCTAssertEqual(sut.transactionsTotal.total, 200)
         XCTAssertEqual(sut.transactionsTotal.totalIncome, 400)
         XCTAssertEqual(sut.transactionsTotal.totalExpense, 200)
+    }
+
+    func test_whenFetchData_receivesAnError_thatIsntFirestore_doesntUpdateErrorDescription() async {
+        // when
+        await sut.fetchData()
+
+        // then
+        XCTAssertTrue(sut.errorDescription.isEmpty)
+    }
+
+    func test_whenFetchData_receivesAnError_thatIsFirestore_updatesErrorDescription() async {
+        // given
+        mockFirebaseManager.shouldCompleteWith = .failure(.firestore("Something failed"))
+
+        // when
+        await sut.fetchData()
+
+        // then
+        XCTAssertEqual(sut.errorDescription, "Something failed")
     }
 }
