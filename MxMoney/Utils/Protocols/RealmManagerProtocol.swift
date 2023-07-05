@@ -11,5 +11,8 @@ import RealmSwift
 protocol RealmManagerProtocol {
     var realm: Realm { get }
 
-    func save(_ object: Object)
+    func save<T: Object>(_ object: T)
+    func saveObjects<T: Object>(_ objects: [T])
+    func fetch<T: Object>(type: T.Type) -> Results<T>
+    func isCacheValid(for screen: String) -> Bool
 }
