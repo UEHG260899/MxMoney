@@ -27,7 +27,7 @@ final class SignUpViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         mockAuthManager = MockAuthManager()
-        mockRealmManager = MockRealmManager()
+        mockRealmManager = MockRealmManager(taskName: self.name)
         mockFirebaseManager = MockFirebaseManager()
         sut = SignUpViewModel(
             authManager: mockAuthManager,

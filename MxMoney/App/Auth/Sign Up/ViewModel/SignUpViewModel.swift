@@ -56,7 +56,9 @@ class SignUpViewModel: ObservableObject {
         )
 
         try await firebaseManager.store(user, in: "users", with: user.id)
-        realmManager.save(user)
+        await MainActor.run {
+            self.realmManager.save(user)
+        }
     }
 
     private func handleError(_ error: AppError) async {

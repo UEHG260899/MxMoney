@@ -6,13 +6,17 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct TransactionsTotal {
-    let total: Double
-    let totalIncome: Double
-    let totalExpense: Double
+class TransactionsTotal: Object {
+    @Persisted var total: Double = 0
+    @Persisted var totalIncome: Double = 0
+    @Persisted var totalExpense: Double = 0
+
+    override init() {}
 
     init(total: Double = 0, totalIncome: Double = 0, totalExpense: Double = 0) {
+        super.init()
         self.total = total
         self.totalIncome = totalIncome
         self.totalExpense = totalExpense
